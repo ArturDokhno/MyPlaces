@@ -46,4 +46,6 @@ class MainTableViewController: UITableViewController {
      }
      */
     
+    @IBAction func cancelAction(_ segue: UIStoryboardSegue) {}
+    
 }
