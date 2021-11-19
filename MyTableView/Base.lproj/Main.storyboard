@@ -39,7 +39,7 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="lacation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zpJ-Ba-rIS">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zpJ-Ba-rIS">
                                             <rect key="frame" x="95" y="34" width="299" height="18"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="18" id="LNd-SU-fAf"/>
@@ -75,7 +75,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="imageOfPlace" destination="9ZO-wX-dHP" id="4cw-po-0ag"/>
-                                    <outlet property="lacationLabel" destination="zpJ-Ba-rIS" id="Pyo-6q-d7Y"/>
+                                    <outlet property="locationLabel" destination="zpJ-Ba-rIS" id="Pyo-6q-d7Y"/>
                                     <outlet property="nameLabel" destination="fsn-cA-KPu" id="CgY-r2-ELJ"/>
                                     <outlet property="typeLabel" destination="5ad-Xp-M7n" id="11q-Yt-1xU"/>
                                 </connections>

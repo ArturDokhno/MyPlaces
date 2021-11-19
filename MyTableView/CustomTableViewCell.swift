@@ -11,7 +11,7 @@ class CustomTableViewCell: UITableViewCell {
 
     @IBOutlet var imageOfPlace: UIImageView!
     @IBOutlet var nameLabel: UILabel!
-    @IBOutlet var lacationLabel: UILabel!
+    @IBOutlet var locationLabel: UILabel!
     @IBOutlet var typeLabel: UILabel!
     
 }
