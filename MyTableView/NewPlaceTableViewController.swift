@@ -10,7 +10,7 @@ import UIKit
 class NewPlaceTableViewController: UITableViewController, UINavigationControllerDelegate {
 
     
-    var newPlace: Place?
+    var newPlace = Place()
     var imageIsChanget = false
     
     @IBOutlet var placeImage: UIImageView!
@@ -21,6 +21,10 @@ class NewPlaceTableViewController: UITableViewController, UINavigationController
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        DispatchQueue.main.async {
+            self.newPlace.savePlaces()
+        }
         
         tableView.tableFooterView = UIView()
         
@@ -76,11 +80,11 @@ class NewPlaceTableViewController: UITableViewController, UINavigationController
             image = UIImage(named: "imagePlaceholder")
         }
         
-        newPlace = Place(name: placeName.text!,
-                         location: placeLocation.text,
-                         type: placeType.text,
-                         image: image,
-                         restaurantImage: nil)
+//        newPlace = Place(name: placeName.text!,
+//                         location: placeLocation.text,
+//                         type: placeType.text,
+//                         image: image,
+//                         restaurantImage: nil)
     }
     
     @IBAction func cancelAction(_ sender: Any) {
