@@ -78,6 +78,7 @@
                                     <outlet property="locationLabel" destination="zpJ-Ba-rIS" id="Pyo-6q-d7Y"/>
                                     <outlet property="nameLabel" destination="fsn-cA-KPu" id="CgY-r2-ELJ"/>
                                     <outlet property="typeLabel" destination="5ad-Xp-M7n" id="11q-Yt-1xU"/>
+                                    <segue destination="etD-rV-7GQ" kind="show" identifier="showDetail" id="qLc-5L-C7Q"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -86,7 +87,7 @@
                             <outlet property="delegate" destination="oTX-3R-14f" id="Qkx-La-zYj"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="My Places" id="MpS-w9-4Az">
+                    <navigationItem key="navigationItem" title="My Places" largeTitleDisplayMode="never" id="MpS-w9-4Az">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="eXo-h3-g6J">
                             <connections>
                                 <segue destination="NKu-hl-6ZD" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="TBL-PC-9YY"/>
@@ -102,7 +103,7 @@
         <scene sceneID="oOp-bf-heH">
             <objects>
                 <tableViewController id="etD-rV-7GQ" customClass="NewPlaceTableViewController" customModule="MyTableView" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="zNw-wr-bVH">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="zNw-wr-bVH">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -111,9 +112,9 @@
                             <tableViewSection id="ZGE-4g-W5e">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="250" id="Xh2-lS-hAe">
-                                        <rect key="frame" x="0.0" y="44.5" width="414" height="250"/>
+                                        <rect key="frame" x="0.0" y="18" width="414" height="250"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Xh2-lS-hAe" id="3cl-ha-soS">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Xh2-lS-hAe" id="3cl-ha-soS">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="250"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -131,7 +132,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="75" id="KIo-vF-KTJ">
-                                        <rect key="frame" x="0.0" y="294.5" width="414" height="75"/>
+                                        <rect key="frame" x="0.0" y="268" width="414" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KIo-vF-KTJ" id="rbD-Ma-BdH">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="75"/>
@@ -166,7 +167,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="75" id="K2f-nC-7LS">
-                                        <rect key="frame" x="0.0" y="369.5" width="414" height="75"/>
+                                        <rect key="frame" x="0.0" y="343" width="414" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="K2f-nC-7LS" id="HUf-NQ-TSm">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="75"/>
@@ -176,16 +177,16 @@
                                                     <rect key="frame" x="16" y="8" width="382" height="63"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p7A-ZE-JY0">
-                                                            <rect key="frame" x="0.0" y="0.0" width="382" height="20.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="382" height="20"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="20.5" id="QmX-3g-Gtb"/>
+                                                                <constraint firstAttribute="height" constant="20" id="QmX-3g-Gtb"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="AppleSDGothicNeo-Thin" family="Apple SD Gothic Neo" pointSize="20"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="Plase location" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4Mw-YI-5Pg">
-                                                            <rect key="frame" x="0.0" y="28.5" width="382" height="34.5"/>
+                                                            <rect key="frame" x="0.0" y="28" width="382" height="35"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                                                             <connections>
@@ -204,7 +205,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="75" id="hWa-Sb-aZA">
-                                        <rect key="frame" x="0.0" y="444.5" width="414" height="75"/>
+                                        <rect key="frame" x="0.0" y="418" width="414" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hWa-Sb-aZA" id="frp-Wi-hYW">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="75"/>
@@ -249,7 +250,7 @@
                             <outlet property="delegate" destination="etD-rV-7GQ" id="cAh-2g-gO5"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="New Place" id="f0L-6z-4O4">
+                    <navigationItem key="navigationItem" title="New Place" largeTitleDisplayMode="always" id="f0L-6z-4O4">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="YJT-mt-lQC">
                             <connections>
                                 <action selector="cancelAction:" destination="etD-rV-7GQ" id="8Qt-tx-7T9"/>
@@ -279,8 +280,8 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bU7-au-pdk" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="mFQ-7m-nJc">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="mFQ-7m-nJc">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" name="Didot-Bold" family="Didot" pointSize="24"/>
@@ -311,9 +312,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m7J-LK-Ulh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1411.5942028985507" y="68.973214285714278"/>
+            <point key="canvasLocation" x="1404" y="-266"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="qLc-5L-C7Q"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="Photo" width="195" height="196"/>
         <systemColor name="systemBackgroundColor">
