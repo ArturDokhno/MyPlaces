@@ -41,6 +41,8 @@ class MainViewController: UITableViewController {
         return 85
     }
     
+    // создаем функцию выхода для кнопки Cancel на экране NewPlaceViewController
+    
     @IBAction func cancelActione(_ segue: UIStoryboardSegue) { }
     
 }

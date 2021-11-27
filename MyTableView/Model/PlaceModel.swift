@@ -23,11 +23,21 @@ struct Place {
 
     static func getPlaces() -> [Place] {
         
+        // создаем пустой массив типа Place
+        
         var places = [Place]()
+        
+        // с помощью цикла пробегаемся по каждому элементу массива restaurantNames
+        // и добавляем каждый элемент в массив places типа Place
+        // вызвав его инициализатор и подставляя данные массива restaurantNames
+        // в нужные нам параметры имя и картинка
         
         for place in restaurantNames {
             places.append(Place(name: place, location: "Сургут", type: "Ресторан", image: place))
         }
+        
+        // возвращаем массив типа Place
+        
         return places
     }
     
