@@ -9,6 +9,8 @@ import UIKit
 
 class NewPlaceViewController: UITableViewController {
     
+    @IBOutlet var imageOfPlace: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -83,7 +85,12 @@ extension NewPlaceViewController: UITextFieldDelegate {
 
 // MARK: - Work with image
 
-extension NewPlaceViewController {
+// подписываемся под протокол пикер делегат что бы воспользоваться методом
+// didFinishPickingMediaWithInfo
+// подписываемся под протокол навигатор делегат что бы делегировать метод
+// imagePickerController в choseImagePicker
+ 
+extension NewPlaceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     // создаем функциию для выбора источника изображения из системного интерфейса
     
@@ -97,6 +104,11 @@ extension NewPlaceViewController {
             
             let imagePicker = UIImagePickerController()
             
+            // определяем кто будет делегировать обязаности метода imagePickerController
+            // назначаем наш класс как делегата выполняющим данный метод 
+            
+            imagePicker.delegate = self
+            
             // позволяем позльзователю редактировать выбраное изображение
             
             imagePicker.allowsEditing = true
@@ -109,6 +121,30 @@ extension NewPlaceViewController {
             
             present(imagePicker, animated: true)
         }
+    }
+    
+    // вызываем метод сообщающий делегату что пользователь выбрал изображение
+    // данный метод должен делегироваться в пикер контроллер
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        // присваиваем значение взятое по ключу из словаря info
+        // приводим это зачение к UIImage
+        
+        imageOfPlace.image = info[.editedImage] as? UIImage
+        
+        // маштабируем изображение по содержимому UIImage
+        
+        imageOfPlace.contentMode = .scaleAspectFill
+        
+        // обрезаем изображение по границам UIImage
+        
+        imageOfPlace.clipsToBounds = true
+        
+        // закрываем ImagePickerController
+        
+        dismiss(animated: true)
+        
     }
     
 }
