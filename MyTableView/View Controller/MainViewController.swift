@@ -10,18 +10,18 @@ import UIKit
 class MainViewController: UITableViewController {
     
     var places = Place.getPlaces()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return places.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomTableViewCell
         
