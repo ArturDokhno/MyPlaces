@@ -21,7 +21,8 @@ class NewPlaceViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        // скрываем клавиатуру при нажатии на любую ячейку кроме нулевой
+        // создаем if else в котором скрываем клавиатуру
+        // при нажатии на любую ячейку кроме нулевой
         
         if indexPath.row == 0 {
             
@@ -88,7 +89,7 @@ extension NewPlaceViewController: UITextFieldDelegate {
 // подписываемся под протокол пикер делегат что бы воспользоваться методом
 // didFinishPickingMediaWithInfo
 // подписываемся под протокол навигатор делегат что бы делегировать метод
-// imagePickerController в choseImagePicker
+// imagePickerController в choseImagePicker в обьект класса let imagePicker
  
 extension NewPlaceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -105,7 +106,7 @@ extension NewPlaceViewController: UIImagePickerControllerDelegate, UINavigationC
             let imagePicker = UIImagePickerController()
             
             // определяем кто будет делегировать обязаности метода imagePickerController
-            // назначаем наш класс как делегата выполняющим данный метод 
+            // назначаем данный класс как делегата выполняющим данный метод
             
             imagePicker.delegate = self
             
@@ -124,11 +125,15 @@ extension NewPlaceViewController: UIImagePickerControllerDelegate, UINavigationC
     }
     
     // вызываем метод сообщающий делегату что пользователь выбрал изображение
-    // данный метод должен делегироваться в пикер контроллер
+    // данный метод должен делегироваться в метод choseImagePicker
+    // а именно к обьекту класса UIImagePickerController() let imagePicker
+    // так как он соответствует протоколу UIImage
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        // присваиваем значение взятое по ключу из словаря info
+        // присваиваем значение в imageOfPlace взятое по ключу из словаря info
+        // заначение выбираем editedImage потому что ранее мы позволили
+        // пользователю редактировать выбраное изображение
         // приводим это зачение к UIImage
         
         imageOfPlace.image = info[.editedImage] as? UIImage
