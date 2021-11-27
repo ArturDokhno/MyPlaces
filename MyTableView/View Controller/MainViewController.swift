@@ -41,5 +41,6 @@ class MainViewController: UITableViewController {
         return 85
     }
     
+    @IBAction func cancelActione(_ segue: UIStoryboardSegue) { }
     
 }
