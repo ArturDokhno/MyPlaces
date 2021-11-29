@@ -9,11 +9,33 @@ import UIKit
 
 class NewPlaceViewController: UITableViewController {
     
-    @IBOutlet var imageOfPlace: UIImageView!
+    // создаем переменную типа Place делая ее опциональной при этом
+    // в данной переменной будем хранить новое место созадное в методе saveNewPlace
+    
+    var newPlace: Place?
+    
+    // создаем переменную по которой будем отслеживать выбрано изображение
+    // для нового места если нет то будем устанавливать стандатное изображение
+    
+    var imageIsChange = false
+    
+    @IBOutlet var saveButton: UIBarButtonItem!
+    
+    @IBOutlet var imagePlace: UIImageView!
+    @IBOutlet var namePlace: UITextField!
+    @IBOutlet var locationPlace: UITextField!
+    @IBOutlet var typePlace: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // отключаем кнопку по умолчанию
+        
+        saveButton.isEnabled = false
+        
+        // добавляем таргет с отлеживанием заполнено текстовое поле или нет
+        
+        namePlace.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
         
     }
     
@@ -85,6 +107,47 @@ class NewPlaceViewController: UITableViewController {
         }
     }
     
+    // создаем метод сохранения нового обьекта
+    
+    func saveNewPlace() {
+        
+        // создаем переменую в которую будем присваивать изображение
+        
+        var image: UIImage?
+        
+        if imageIsChange {
+            
+            // если тру то присваиваем выбраное изображение пользователем
+            
+            image = imagePlace.image
+            
+        } else {
+            
+            // если нет то присваиваем свое изображение, стандартное
+            
+            image = UIImage(named: "imagePlaceholder")
+        }
+        
+        // namePlace можем извлеч принудительно так как 100% уверены что оно будет заполнено
+        // так как кнопка save не будет работать если поле name не заполнено
+        
+        newPlace = Place(name: namePlace.text!,
+                         location: locationPlace.text,
+                         type: typePlace.text,
+                         image: image,
+                         restaurantName: nil)
+        
+    }
+    
+    // создаем кнопку выхода для закртия текушего вью
+    // и возврата к предыдущему
+    
+    @IBAction func cancelAction(_ sender: Any) {
+        
+        dismiss(animated: true)
+        
+    }
+    
 }
 
 // MARK: - Text field delegate
@@ -97,6 +160,28 @@ extension NewPlaceViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+    
+    // создаем метод отвечающий за то что бы кнопка Save
+    // была активна в зависимости набран тект в namePlace или нет
+    
+    @objc private func textFieldChanged() {
+        
+        // проверяем пустое ли текстовое поле
+        
+        if namePlace.text?.isEmpty == false {
+            
+            // если не пустое кнопка Save активна
+            
+            saveButton.isEnabled = true
+            
+        } else {
+            
+            // иначе она не активна
+            
+            saveButton.isEnabled = false
+        }
+    }
+    
 }
 
 // MARK: - Work with image
@@ -151,15 +236,19 @@ extension NewPlaceViewController: UIImagePickerControllerDelegate, UINavigationC
         // пользователю редактировать выбраное изображение
         // приводим это зачение к UIImage
         
-        imageOfPlace.image = info[.editedImage] as? UIImage
+        imagePlace.image = info[.editedImage] as? UIImage
         
         // маштабируем изображение по содержимому UIImage
         
-        imageOfPlace.contentMode = .scaleAspectFill
+        imagePlace.contentMode = .scaleAspectFill
         
         // обрезаем изображение по границам UIImage
         
-        imageOfPlace.clipsToBounds = true
+        imagePlace.clipsToBounds = true
+        
+        // если imageIsChange тру картинку не меняем
+        
+        imageIsChange = true
         
         // закрываем ImagePickerController
         
