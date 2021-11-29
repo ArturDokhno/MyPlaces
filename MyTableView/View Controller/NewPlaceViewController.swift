@@ -26,6 +26,11 @@ class NewPlaceViewController: UITableViewController {
         
         if indexPath.row == 0 {
             
+            // создаем две переменных в которых будем хранить иконки для кнопок алерта 
+            
+            let cameraIcon = UIImage(named: "camera")
+            let photoIcon = UIImage(named: "photo")
+            
             // создаем алерт контрллер стиля "лист дейсвий" появляющейся с низу экрана
             // далее создаем кнопки дейсвия которые добавим в алерт контроллер
             
@@ -42,6 +47,11 @@ class NewPlaceViewController: UITableViewController {
                 self.choseImagePicker(sourse: .camera)
             }
             
+            // присваиваем иконку для кнопки и передвигаем title в левую сторону
+            
+            camera.setValue(cameraIcon, forKey: "image")
+            camera.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+            
             // создаем кнопку дейсвия в алерт контроллере
             
             let photo = UIAlertAction(title: "Photo", style: .default) { _ in
@@ -50,6 +60,11 @@ class NewPlaceViewController: UITableViewController {
                 
                 self.choseImagePicker(sourse: .photoLibrary)
             }
+            
+            // присваиваем иконку для кнопки и передвигаем title в левую сторону
+            
+            photo.setValue(photoIcon, forKey: "image")
+            photo.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
             
             // создаем кнопку выхода в алерт контроллере
             
