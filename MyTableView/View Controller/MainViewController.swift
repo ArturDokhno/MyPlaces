@@ -6,41 +6,55 @@
 //
 
 import UIKit
+import RealmSwift
 
 class MainViewController: UITableViewController {
     
-//    var places = Place.getPlaces()
+    // загружаем наши данные из таблицы Realm
+    // Results позволяет работать с данными в реальном времени
+    
+    var places: Results<Place>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // отображаем данные из базы данных в приложении
+        // инициализируя places и вызывая метод objects
+        // стави .self указывая что нужно нам именно тип данных Place
+        // а не модель данных
+        
+        places = realm.objects(Place.self)
         
     }
     
     // MARK: - Table view data source
     
-//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return places.count
-//    }
-//
-//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomTableViewCell
-//
-//        let place = places[indexPath.row]
-//
-//        cell.nameLabel.text = place.name
-//        cell.locationlabel.text = place.location
-//        cell.typeLabel.text = place.type
-//
-//        if place.image == nil {
-//            cell.imageOfPlace.image = UIImage(named: place.restaurantName!)
-//        } else {
-//            cell.imageOfPlace.image = place.image
-//        }
-//
-//        cell.imageOfPlace.layer.cornerRadius = cell.imageOfPlace.frame.size.height / 2
-//
-//        return cell
-//    }
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        // если база пустая возвращаем количесво ячеек 0
+        // если нет то возвращаем количесво ячеек равной
+        // количеству моделей в базе
+        
+        return places.isEmpty ? 0 : places.count
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomTableViewCell
+
+        let place = places[indexPath.row]
+
+        cell.nameLabel.text = place.name
+        cell.locationlabel.text = place.location
+        cell.typeLabel.text = place.type
+        
+        // imageData не будет пустым можем извлечь принудительно
+        
+        cell.imageOfPlace.image = UIImage(data: place.imageData!)
+
+        cell.imageOfPlace.layer.cornerRadius = cell.imageOfPlace.frame.size.height / 2
+
+        return cell
+    }
     
     // MARK: - Table view delegate
     
@@ -64,13 +78,6 @@ class MainViewController: UITableViewController {
         // из экземпляра класа
         
         newPlaceVC.saveNewPlace()
-        
-        // можем смело принудительно разворачивать опционал
-        // а именно массив newPlace и данные из него добавлять в масив places
-        // так как мы точно получили данные в виду того что
-        // кнопка Save не будет активна пока необходимое поле не будет заполнено
-        
-//        places.append(newPlaceVC.newPlace!)
         
         // обновляем данные таблицы для отображения нового места в ячейки 
         

@@ -9,11 +9,6 @@ import UIKit
 
 class NewPlaceViewController: UITableViewController {
     
-    // создаем переменную типа Place делая ее опциональной при этом
-    // в данной переменной будем хранить новое место созадное в методе saveNewPlace
-    
-    var newPlace = Place()
-    
     // создаем переменную по которой будем отслеживать выбрано ли изображение
     // для нового места, если нет то будем устанавливать стандатное изображение
     
@@ -28,10 +23,6 @@ class NewPlaceViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        DispatchQueue.main.async {
-            self.newPlace.savePlace()
-        }
         
         // отключаем кнопку по умолчанию
         
@@ -132,14 +123,18 @@ class NewPlaceViewController: UITableViewController {
             image = UIImage(named: "imagePlaceholder")
         }
         
-        // namePlace можем извлеч принудительно так как 100% уверены что оно будет заполнено
-        // так как кнопка save не будет работать если поле name не заполнено
-//        
-//        newPlace = Place(name: namePlace.text!,
-//                         location: locationPlace.text,
-//                         type: typePlace.text,
-//                         image: image,
-//                         restaurantName: nil)
+        let imageData = image?.pngData()
+        
+        // инициализируем класс подставляя параметры из текст филдов
+        
+        let newPlace = Place(name: namePlace.text!,
+                             location: locationPlace.text,
+                             type: typePlace.text,
+                             imageData: imageData)
+        
+        // сохраняем новое место в базу данных
+        
+        StorageManager.saveOject(newPlace)
         
     }
     
