@@ -37,12 +37,12 @@ class MainViewController: UITableViewController {
         
         return places.isEmpty ? 0 : places.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomTableViewCell
-
+        
         let place = places[indexPath.row]
-
+        
         cell.nameLabel.text = place.name
         cell.locationlabel.text = place.location
         cell.typeLabel.text = place.type
@@ -50,9 +50,9 @@ class MainViewController: UITableViewController {
         // imageData не будет пустым можем извлечь принудительно
         
         cell.imageOfPlace.image = UIImage(data: place.imageData!)
-
+        
         cell.imageOfPlace.layer.cornerRadius = cell.imageOfPlace.frame.size.height / 2
-
+        
         return cell
     }
     
@@ -65,7 +65,7 @@ class MainViewController: UITableViewController {
     // метод вызывающий дейсвие при свайпи ячейки
     
     override func tableView(_ tableView: UITableView,
-                   editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+                            editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
         // определяем обьекст для удаления
         // берем обьект из массива places по индексу текущей строки
@@ -95,6 +95,38 @@ class MainViewController: UITableViewController {
     
     // MARK: - Navigation
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        // проверяем переход на равеносво с showDetail
+        // с помощью переоределения init и его параметра identifier
+        // который является опциональным стрингом
+        
+        if segue.identifier == "showDetail" {
+            
+            // извлекаем индекс ячейки котрую нажали
+            
+            guard let indexPath = tableView.indexPathForSelectedRow else { return }
+            
+            // извлекаем обьект из массива places по текущему индексу
+            
+            let place = places[indexPath.row]
+            
+            // передаем данные с ячейки которую выбрали в NewPlaceViewController
+            // с помощью атрибута destination у segue
+            
+            let newPlaceVC = segue.destination as! NewPlaceViewController
+            
+            // обращаемся к экземпляру newPlaceVC и его свойству
+            // currentPlace назначая в него выбраный place
+            
+            newPlaceVC.currentPlace = place 
+            
+        } else {
+            
+        }
+        
+    }
+    
     @IBAction func unwindSegue(_ segue: UIStoryboardSegue) {
         
         // создаем экземпляр класса NewPlaceViewController в константе NewPlaceVC
@@ -108,7 +140,7 @@ class MainViewController: UITableViewController {
         // вызываем метод saveNewPlace
         // из экземпляра класа
         
-        newPlaceVC.saveNewPlace()
+        newPlaceVC.savePlace()
         
         // обновляем данные таблицы для отображения нового места в ячейки 
         

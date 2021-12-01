@@ -9,6 +9,12 @@ import UIKit
 
 class NewPlaceViewController: UITableViewController {
     
+    // создаем обьект в котоырм можем передать
+    // обьект с типом Place из главного контроллера
+    // нужно для редактирования данных выбраной ячейки 
+    
+    var currentPlace: Place?
+    
     // создаем переменную по которой будем отслеживать выбрано ли изображение
     // для нового места, если нет то будем устанавливать стандатное изображение
     
@@ -31,6 +37,10 @@ class NewPlaceViewController: UITableViewController {
         // добавляем таргет с отлеживанием заполнено текстовое поле или нет
         
         namePlace.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
+        
+        // вызываем метод редактирование
+        
+        setupEditScreen()
         
     }
     
@@ -104,7 +114,7 @@ class NewPlaceViewController: UITableViewController {
     
     // создаем метод сохранения нового обьекта
     
-    func saveNewPlace() {
+    func savePlace() {
         
         // создаем переменую в которую будем присваивать изображение
         
@@ -131,11 +141,84 @@ class NewPlaceViewController: UITableViewController {
                              location: locationPlace.text,
                              type: typePlace.text,
                              imageData: imageData)
+        // выполянем проверку в каком методе мы находимя
+        // редактирование или создание нового места
         
-        // сохраняем новое место в базу данных
+        if currentPlace != nil {
+            try! realm.write{
+                currentPlace?.name = newPlace.name
+                currentPlace?.location = newPlace.location
+                currentPlace?.type = newPlace.type
+                currentPlace?.imageData = newPlace.imageData
+            }
+        }else {
+            // сохраняем новое место в базу данных
+            
+            StorageManager.saveOject(newPlace)
+        }
         
-        StorageManager.saveOject(newPlace)
         
+        
+    }
+    
+    // данный метод нужен для того что бы редактировать то что мы получаем
+    // из ячейки с место из главного контроллера
+    
+    private func setupEditScreen() {
+        
+        // проверяем наше место которое хотим изменить на пустое оно или нет
+        
+        if currentPlace != nil {
+            
+            setupNavigationBar()
+            
+            // ставим тру что бы изображение не менялось на стандартное
+            
+            imageIsChange = true
+            
+            // подставляем в поля второго контроллера
+            // все значения получиненные из ячейки первого контроллера
+            
+            // привожу imageDate к типу image
+            
+            guard let date = currentPlace?.imageData,
+                  let image = UIImage(data: date) else { return }
+            
+            imagePlace.image = image
+            imagePlace.contentMode = .scaleToFill
+            
+            namePlace.text = currentPlace?.name
+            locationPlace.text = currentPlace?.location
+            typePlace.text = currentPlace?.type
+            
+        }
+        
+    }
+    
+    // переделываем навигатор бар во время редактирования сущесвующей ячейки 
+    
+    private func setupNavigationBar() {
+        
+        // убираем надпись в левой кнопки навигатор бара
+        
+        if let topItem = navigationController?.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "",
+                                                        style: .plain,
+                                                        target: nil,
+                                                        action: nil)
+        }
+        
+        // убираем левую кнопку в баре
+        
+        navigationItem.leftBarButtonItem = nil
+        
+        // присваиваем заголовок название места в бар
+        
+        title = currentPlace?.name
+        
+        // делаем кнопку сохранения доступной
+        
+        saveButton.isEnabled = true
     }
     
     // создаем кнопку выхода для закртия текушего вью
@@ -189,7 +272,7 @@ extension NewPlaceViewController: UITextFieldDelegate {
 // didFinishPickingMediaWithInfo
 // подписываемся под протокол навигатор делегат что бы делегировать метод
 // imagePickerController в choseImagePicker в обьект класса let imagePicker
- 
+
 extension NewPlaceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     // создаем функциию для выбора источника изображения из системного интерфейса

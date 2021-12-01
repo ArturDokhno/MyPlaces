@@ -68,6 +68,7 @@
                                     <outlet property="locationlabel" destination="Y8o-gl-Azs" id="CRc-4a-SdE"/>
                                     <outlet property="nameLabel" destination="1xw-RH-bVB" id="kdl-2E-zhh"/>
                                     <outlet property="typeLabel" destination="ELG-8E-4zn" id="dlM-Vf-VUL"/>
+                                    <segue destination="ylI-dH-oQ2" kind="show" identifier="showDetail" id="lKF-dx-Hjh"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -76,7 +77,7 @@
                             <outlet property="delegate" destination="6SC-5i-aeD" id="yms-Ds-O8t"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="My Places" id="cZg-14-CKl">
+                    <navigationItem key="navigationItem" title="My Places" largeTitleDisplayMode="never" id="cZg-14-CKl">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="amD-cA-Wy8">
                             <connections>
                                 <segue destination="vAC-NM-ycf" kind="presentation" modalTransitionStyle="flipHorizontal" id="HyN-xK-0GP"/>
@@ -232,8 +233,12 @@
                             <outlet property="delegate" destination="ylI-dH-oQ2" id="8gq-ua-hNS"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="New Place" id="vck-tr-hIF">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Gf1-mW-goW"/>
+                    <navigationItem key="navigationItem" title="New Place" largeTitleDisplayMode="always" id="vck-tr-hIF">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Gf1-mW-goW">
+                            <connections>
+                                <segue destination="gnx-NR-D5z" kind="unwind" unwindAction="unwindSegue:" id="a3m-Wx-07p"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="Bwx-uc-1Mc">
                             <connections>
                                 <segue destination="gnx-NR-D5z" kind="unwind" unwindAction="unwindSegue:" id="Zms-yw-28Q"/>
@@ -251,14 +256,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p3r-LH-D0L" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="gnx-NR-D5z" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1727.536231884058" y="-172.09821428571428"/>
+            <point key="canvasLocation" x="1784" y="-172"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="uRB-BG-ZeB">
             <objects>
                 <navigationController id="6T1-CU-t4f" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="vcR-kA-cLv">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="vcR-kA-cLv">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" name="Didot" family="Didot" pointSize="25"/>
@@ -288,9 +293,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HDp-Mo-uBK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="977" y="-172"/>
+            <point key="canvasLocation" x="1001" y="-548"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="lKF-dx-Hjh"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="Photo" width="195" height="196"/>
         <systemColor name="systemBackgroundColor">
