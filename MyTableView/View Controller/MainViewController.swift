@@ -62,7 +62,38 @@ class MainViewController: UITableViewController {
         return 85
     }
     
-    //
+    // метод вызывающий дейсвие при свайпи ячейки
+    
+    override func tableView(_ tableView: UITableView,
+                   editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        // определяем обьекст для удаления
+        // берем обьект из массива places по индексу текущей строки
+        
+        let place = places[indexPath.row]
+        
+        // создаем дейсвие удаления с загодлвком "Delete"
+        // параметр стаил ставим дефолд что бы наша кнопка была красной
+        
+        let deleteAction = UITableViewRowAction(style: .default,
+                                                title: "Delete") { (_, _) in
+            
+            // удаляем обьект из базы данных
+            
+            StorageManager.deleteObject(place)
+            
+            // удаляем строку по индексу
+            
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+        
+        // возвращаем дейсвие deleteAction в виде массива как и просит метод
+        
+        return [deleteAction]
+        
+    }
+    
+    // MARK: - Navigation
     
     @IBAction func unwindSegue(_ segue: UIStoryboardSegue) {
         
