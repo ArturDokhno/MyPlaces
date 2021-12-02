@@ -8,7 +8,9 @@
 import UIKit
 import RealmSwift
 
-class MainViewController: UITableViewController {
+class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    @IBOutlet var tableView: UITableView!
     
     // загружаем наши данные из таблицы Realm
     // Results позволяет работать с данными в реальном времени
@@ -29,7 +31,7 @@ class MainViewController: UITableViewController {
     
     // MARK: - Table view data source
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         // если база пустая возвращаем количесво ячеек 0
         // если нет то возвращаем количесво ячеек равной
@@ -38,7 +40,7 @@ class MainViewController: UITableViewController {
         return places.isEmpty ? 0 : places.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomTableViewCell
         
         let place = places[indexPath.row]
@@ -58,13 +60,13 @@ class MainViewController: UITableViewController {
     
     // MARK: - Table view delegate
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 85
     }
     
     // метод вызывающий дейсвие при свайпи ячейки
     
-    override func tableView(_ tableView: UITableView,
+    func tableView(_ tableView: UITableView,
                             editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
         // определяем обьекст для удаления
@@ -146,5 +148,7 @@ class MainViewController: UITableViewController {
         
         tableView.reloadData()
     }
+    
+    @IBAction func cancelButton(_ segue: UIStoryboardSegue) { }
     
 }
