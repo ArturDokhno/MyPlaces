@@ -11,11 +11,19 @@ import RealmSwift
 class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var segmentedControl: UISegmentedControl!
+    @IBOutlet var reversedSortingButton: UIBarButtonItem!
+    
     
     // загружаем наши данные из таблицы Realm
     // Results позволяет работать с данными в реальном времени
     
     var places: Results<Place>!
+    
+    // вспомогательно свойство для сортировки возростанию или убыванию
+    // которое мы будем менять при нажатии кнопки
+    
+    var ascendingSorting = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,7 +75,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     // метод вызывающий дейсвие при свайпи ячейки
     
     func tableView(_ tableView: UITableView,
-                            editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+                   editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
         // определяем обьекст для удаления
         // берем обьект из массива places по индексу текущей строки
@@ -121,7 +129,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             // обращаемся к экземпляру newPlaceVC и его свойству
             // currentPlace назначая в него выбраный place
             
-            newPlaceVC.currentPlace = place 
+            newPlaceVC.currentPlace = place
             
         } else {
             
@@ -144,11 +152,70 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         newPlaceVC.savePlace()
         
-        // обновляем данные таблицы для отображения нового места в ячейки 
+        // обновляем данные таблицы для отображения нового места в ячейки
         
         tableView.reloadData()
     }
     
     @IBAction func cancelButton(_ segue: UIStoryboardSegue) { }
+    
+    @IBAction func sortSelection(_ sender: UISegmentedControl) {
+        
+        // вызываем метод сортировки
+        
+        sorting()
+        
+    }
+    
+    @IBAction func reversedSorting(_ sender: Any) {
+        
+        // меняем значение на противоположное
+        // с помощью переключателя
+        
+        ascendingSorting.toggle()
+        
+        if ascendingSorting {
+            
+            // усли тру то выбираем стрелочками вверх
+            
+            reversedSortingButton.image = UIImage(named: "ZA")
+        } else {
+            
+            // иначе стрелками вниз
+            
+            reversedSortingButton.image = UIImage(named: "AZ")
+        }
+        
+        // вызываем метод сортировки
+        
+        sorting()
+        
+    }
+    
+    private func sorting() {
+        
+        // если выбран первый селектор по индексу 0
+        // сортируем с ключем и по возрастанию или убыванию
+        // подставляя булевое значение ascendingSorting
+        
+        if segmentedControl.selectedSegmentIndex == 0 {
+            
+            // сортируем данные по дате добавления
+            
+            places = places.sorted(byKeyPath: "date", ascending: ascendingSorting)
+            
+        } else {
+            
+            // сортируем данные по имени
+            
+            places = places.sorted(byKeyPath: "name", ascending: ascendingSorting)
+            
+        }
+        
+        // обновляем таблице что бы отобразились наши сортировки
+        
+        tableView.reloadData()
+    }
+    
     
 }
