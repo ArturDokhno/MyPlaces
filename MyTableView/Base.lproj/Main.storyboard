@@ -3,6 +3,7 @@
     <device id="retina6_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -145,11 +146,25 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="428" height="250"/>
                                                     <color key="backgroundColor" systemColor="systemGray6Color"/>
                                                 </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cNL-tp-5VX">
+                                                    <rect key="frame" x="358" y="189" width="50" height="50"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="50" id="SpK-Kh-Sia"/>
+                                                        <constraint firstAttribute="width" constant="50" id="byT-9i-uBa"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" image="map"/>
+                                                    <connections>
+                                                        <segue destination="J7N-dE-7b2" kind="presentation" identifier="showMap" id="6uk-Gn-jrH"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="qlh-vr-L3o" secondAttribute="bottom" id="3aF-9f-7rd"/>
                                                 <constraint firstItem="qlh-vr-L3o" firstAttribute="leading" secondItem="xvv-DP-BtZ" secondAttribute="leading" id="AKn-7Q-48R"/>
                                                 <constraint firstAttribute="trailing" secondItem="qlh-vr-L3o" secondAttribute="trailing" id="GHr-Ut-Yes"/>
+                                                <constraint firstItem="cNL-tp-5VX" firstAttribute="trailing" secondItem="xvv-DP-BtZ" secondAttribute="trailingMargin" id="l7j-wi-djB"/>
+                                                <constraint firstItem="cNL-tp-5VX" firstAttribute="bottom" secondItem="xvv-DP-BtZ" secondAttribute="bottomMargin" id="ooq-bw-mp3"/>
                                                 <constraint firstItem="qlh-vr-L3o" firstAttribute="top" secondItem="xvv-DP-BtZ" secondAttribute="top" id="v5q-Xx-Rc0"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -319,6 +334,49 @@
             </objects>
             <point key="canvasLocation" x="1045" y="-172"/>
         </scene>
+        <!--Map View Controller-->
+        <scene sceneID="ghT-EV-4Lm">
+            <objects>
+                <viewController modalPresentationStyle="fullScreen" id="J7N-dE-7b2" customClass="MapViewController" customModule="MyTableView" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lgb-FX-cKg">
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ph2-C9-bSG">
+                                <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ifq-NP-rwT">
+                                <rect key="frame" x="20" y="44" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="5dl-Zq-b5T"/>
+                                    <constraint firstAttribute="height" constant="50" id="FzK-m1-2be"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain">
+                                    <imageReference key="image" image="xmark" catalog="system" symbolScale="large"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="closeVC:" destination="J7N-dE-7b2" eventType="touchUpInside" id="gwo-G3-5Jg"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="aG4-WC-5vN"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="ph2-C9-bSG" firstAttribute="leading" secondItem="aG4-WC-5vN" secondAttribute="leading" id="20z-7W-YMz"/>
+                            <constraint firstItem="aG4-WC-5vN" firstAttribute="trailing" secondItem="ph2-C9-bSG" secondAttribute="trailing" id="55P-uM-8JX"/>
+                            <constraint firstItem="ifq-NP-rwT" firstAttribute="leading" secondItem="aG4-WC-5vN" secondAttribute="leading" constant="20" id="Tb1-ti-qEc"/>
+                            <constraint firstItem="ifq-NP-rwT" firstAttribute="top" secondItem="aG4-WC-5vN" secondAttribute="top" id="bFb-Qb-lkR"/>
+                            <constraint firstItem="ph2-C9-bSG" firstAttribute="top" secondItem="lgb-FX-cKg" secondAttribute="top" id="h8W-hG-Ifz"/>
+                            <constraint firstAttribute="bottom" secondItem="ph2-C9-bSG" secondAttribute="bottom" id="ydj-Nu-Ip3"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MZJ-cX-6Jn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1843" y="-172"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="uRB-BG-ZeB">
             <objects>
@@ -369,6 +427,8 @@
     <resources>
         <image name="AZ" width="25" height="24"/>
         <image name="Photo" width="194.66667175292969" height="195.66667175292969"/>
+        <image name="map" width="50" height="50"/>
+        <image name="xmark" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
