@@ -114,6 +114,26 @@ class NewPlaceViewController: UITableViewController {
         }
     }
     
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        // если переход не showMap то выходи от суда
+        
+        if segue.identifier != "showMap" {
+            return
+        }
+        
+        // если да то создаем экземпляр класса MapViewController
+        
+        let mapVC = segue.destination as! MapViewController
+        
+        // передае туда в свойство place currentPlace из этого класса
+        // тоесть выбраное место пользователем
+        
+        mapVC.place = currentPlace
+    }
+    
     // создаем метод сохранения нового обьекта
     
     func savePlace() {
