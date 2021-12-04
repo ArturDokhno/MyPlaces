@@ -11,14 +11,16 @@ class NewPlaceViewController: UITableViewController {
     
     // создаем обьект в котоырм можем передать
     // обьект с типом Place из главного контроллера
-    // нужно для редактирования данных выбраной ячейки 
+    // нужно для редактирования данных выбраной ячейки
     
-    var currentPlace: Place?
+    var currentPlace: Place!
     
     // создаем переменную по которой будем отслеживать выбрано ли изображение
     // для нового места, если нет то будем устанавливать стандатное изображение
     
     var imageIsChange = false
+    
+    @IBOutlet var ratingControl: RaitingControl!
     
     @IBOutlet var saveButton: UIBarButtonItem!
     
@@ -41,14 +43,6 @@ class NewPlaceViewController: UITableViewController {
         // вызываем метод редактирование
         
         setupEditScreen()
-        
-        // убираю футер табле вью
-        
-//        tableView.tableFooterView = UIView(frame:
-//                                            CGRect(x: 0,
-//                                                   y: 0,
-//                                                   width: tableView.frame.size.width,
-//                                                   height: 1))
         
     }
     
@@ -148,7 +142,9 @@ class NewPlaceViewController: UITableViewController {
         let newPlace = Place(name: namePlace.text!,
                              location: locationPlace.text,
                              type: typePlace.text,
-                             imageData: imageData)
+                             imageData: imageData,
+                             rating: Double(ratingControl.rating))
+        
         // выполянем проверку в каком методе мы находимя
         // редактирование или создание нового места
         
@@ -158,6 +154,7 @@ class NewPlaceViewController: UITableViewController {
                 currentPlace?.location = newPlace.location
                 currentPlace?.type = newPlace.type
                 currentPlace?.imageData = newPlace.imageData
+                currentPlace?.rating = newPlace.rating
             }
         }else {
             // сохраняем новое место в базу данных
@@ -198,6 +195,7 @@ class NewPlaceViewController: UITableViewController {
             namePlace.text = currentPlace?.name
             locationPlace.text = currentPlace?.location
             typePlace.text = currentPlace?.type
+            ratingControl.rating = Int(currentPlace.rating)
             
         }
         
