@@ -15,6 +15,7 @@
 		75361C012755389B006E6C76 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 75361C002755389B006E6C76 /* Realm */; };
 		75361C032755389B006E6C76 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 75361C022755389B006E6C76 /* RealmSwift */; };
 		75409F752752508000DD5375 /* NewPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75409F742752508000DD5375 /* NewPlaceViewController.swift */; };
+		75B5F48E275A121A002EB47E /* RaitingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B5F48D275A121A002EB47E /* RaitingControl.swift */; };
 		75BA214A27517ACF00DA7647 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BA214927517ACF00DA7647 /* CustomTableViewCell.swift */; };
 		75C2D4AD2755323A00BD660D /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C2D4AC2755323A00BD660D /* StorageManager.swift */; };
 		75C484B727517E610056D990 /* PlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C484B627517E610056D990 /* PlaceModel.swift */; };
@@ -30,6 +31,7 @@
 		7509FAD0274557D600449F83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7509FAD2274557D600449F83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		75409F742752508000DD5375 /* NewPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPlaceViewController.swift; sourceTree = "<group>"; };
+		75B5F48D275A121A002EB47E /* RaitingControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaitingControl.swift; sourceTree = "<group>"; };
 		75BA214927517ACF00DA7647 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		75C2D4AC2755323A00BD660D /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		75C484B627517E610056D990 /* PlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModel.swift; sourceTree = "<group>"; };
@@ -70,49 +72,18 @@
 			children = (
 				7509FAC4274557D500449F83 /* AppDelegate.swift */,
 				7509FAC6274557D500449F83 /* SceneDelegate.swift */,
+				75D31F092751396D00EB441A /* MainViewController.swift */,
+				75409F742752508000DD5375 /* NewPlaceViewController.swift */,
+				75C484B627517E610056D990 /* PlaceModel.swift */,
 				75C2D4AC2755323A00BD660D /* StorageManager.swift */,
-				75BA214E27517DE200DA7647 /* Model */,
-				75BA214C27517DCD00DA7647 /* View Controller */,
-				75BA214B27517DC700DA7647 /* View */,
+				75BA214927517ACF00DA7647 /* CustomTableViewCell.swift */,
+				75B5F48D275A121A002EB47E /* RaitingControl.swift */,
+				7509FACA274557D500449F83 /* Main.storyboard */,
 				7509FACD274557D600449F83 /* Assets.xcassets */,
 				7509FACF274557D600449F83 /* LaunchScreen.storyboard */,
 				7509FAD2274557D600449F83 /* Info.plist */,
 			);
 			path = MyTableView;
-			sourceTree = "<group>";
-		};
-		75BA214B27517DC700DA7647 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				7509FACA274557D500449F83 /* Main.storyboard */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		75BA214C27517DCD00DA7647 /* View Controller */ = {
-			isa = PBXGroup;
-			children = (
-				75BA214D27517DD600DA7647 /* Cell */,
-				75D31F092751396D00EB441A /* MainViewController.swift */,
-				75409F742752508000DD5375 /* NewPlaceViewController.swift */,
-			);
-			path = "View Controller";
-			sourceTree = "<group>";
-		};
-		75BA214D27517DD600DA7647 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				75BA214927517ACF00DA7647 /* CustomTableViewCell.swift */,
-			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
-		75BA214E27517DE200DA7647 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				75C484B627517E610056D990 /* PlaceModel.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,6 +170,7 @@
 				75C2D4AD2755323A00BD660D /* StorageManager.swift in Sources */,
 				75C484B727517E610056D990 /* PlaceModel.swift in Sources */,
 				75BA214A27517ACF00DA7647 /* CustomTableViewCell.swift in Sources */,
+				75B5F48E275A121A002EB47E /* RaitingControl.swift in Sources */,
 				7509FAC7274557D500449F83 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -188,6 +188,12 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
+    // убираем выделение кнопки при нажатии 
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -208,7 +214,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             // а ячейка для редактирования выбирается из основного массива
             // при фильтрации мы выбирали не коретную ячейку так как индексы ячеек
             // не совпадали для этого мы сделали выбор ячейки в зависимости
-            // если текст в поисковике или нет 
+            // если текст в поисковике или нет
             
             let place: Place
             
