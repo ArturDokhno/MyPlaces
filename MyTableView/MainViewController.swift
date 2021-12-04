@@ -113,31 +113,20 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         // если нет то возвращаем количесво ячеек равной
         // количеству моделей в базе
         
-        return places.isEmpty ? 0 : places.count
+        return places.count
         
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomTableViewCell
         
-        var place = Place()
-        
         // если isFiltering тру то присваиваем массиву place
         // значения из массива filteredPlaces по индексу
+        // если fals то присваиваем массиву place
+        // значения из массива places по индексу
         
-        if isFiltering {
-            
-            place = filteredPlaces[indexPath.row]
-            
-        } else {
-            
-            // если fals то присваиваем массиву place
-            // значения из массива places по индексу
-            
-            place = places[indexPath.row]
-            
-        }
-        
+        let place = isFiltering ? filteredPlaces[indexPath.row] : places[indexPath.row]
+
         cell.nameLabel.text = place.name
         cell.locationlabel.text = place.location
         cell.typeLabel.text = place.type
@@ -145,8 +134,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         // imageData не будет пустым можем извлечь принудительно
         
         cell.imageOfPlace.image = UIImage(data: place.imageData!)
-        
-        cell.imageOfPlace.layer.cornerRadius = cell.imageOfPlace.frame.size.height / 2
+
         
         return cell
     }
@@ -216,13 +204,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             // не совпадали для этого мы сделали выбор ячейки в зависимости
             // если текст в поисковике или нет
             
-            let place: Place
-            
-            if isFiltering {
-                place = filteredPlaces[indexPath.row]
-            } else {
-                place = places[indexPath.row]
-            }
+            let place = isFiltering ? filteredPlaces[indexPath.row] : places[indexPath.row]
             
             // передаем данные с ячейки которую выбрали в NewPlaceViewController
             // с помощью атрибута destination у segue
