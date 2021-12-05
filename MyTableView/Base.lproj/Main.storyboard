@@ -360,6 +360,18 @@
                                     <action selector="closeVC:" destination="J7N-dE-7b2" eventType="touchUpInside" id="gwo-G3-5Jg"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t9Z-zp-bPr">
+                                <rect key="frame" x="358" y="842" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="9iL-NU-hmz"/>
+                                    <constraint firstAttribute="height" constant="50" id="UzH-6J-iHJ"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="location.north.circle" catalog="system"/>
+                                <connections>
+                                    <action selector="centerViewInUserLocation" destination="J7N-dE-7b2" eventType="touchUpInside" id="xhe-v3-Vo2"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="aG4-WC-5vN"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -367,8 +379,10 @@
                             <constraint firstItem="ph2-C9-bSG" firstAttribute="leading" secondItem="aG4-WC-5vN" secondAttribute="leading" id="20z-7W-YMz"/>
                             <constraint firstItem="aG4-WC-5vN" firstAttribute="trailing" secondItem="ph2-C9-bSG" secondAttribute="trailing" id="55P-uM-8JX"/>
                             <constraint firstItem="ifq-NP-rwT" firstAttribute="leading" secondItem="aG4-WC-5vN" secondAttribute="leading" constant="20" id="Tb1-ti-qEc"/>
+                            <constraint firstItem="t9Z-zp-bPr" firstAttribute="bottom" secondItem="aG4-WC-5vN" secondAttribute="bottom" id="aBR-dR-icZ"/>
                             <constraint firstItem="ifq-NP-rwT" firstAttribute="top" secondItem="aG4-WC-5vN" secondAttribute="top" id="bFb-Qb-lkR"/>
                             <constraint firstItem="ph2-C9-bSG" firstAttribute="top" secondItem="lgb-FX-cKg" secondAttribute="top" id="h8W-hG-Ifz"/>
+                            <constraint firstItem="aG4-WC-5vN" firstAttribute="trailing" secondItem="t9Z-zp-bPr" secondAttribute="trailing" constant="20" id="tkf-1n-Io7"/>
                             <constraint firstAttribute="bottom" secondItem="ph2-C9-bSG" secondAttribute="bottom" id="ydj-Nu-Ip3"/>
                         </constraints>
                     </view>
@@ -430,6 +444,7 @@
     <resources>
         <image name="AZ" width="25" height="24"/>
         <image name="Photo" width="194.66667175292969" height="195.66667175292969"/>
+        <image name="location.north.circle" catalog="system" width="128" height="121"/>
         <image name="map" width="50" height="50"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">

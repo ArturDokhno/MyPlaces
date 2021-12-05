@@ -15,6 +15,11 @@ class MapViewController: UIViewController {
     
     let locationManager = CLLocationManager()
     
+    // данное свойсво определяет метраж в центроки видимости места нахождения
+    // пользователя на карте
+    
+    let regionInMeters = 10_000.00
+    
     var place = Place()
     
     // индификатор для метода dequeueReusableAnnotationView (withIdentifier :)
@@ -38,6 +43,24 @@ class MapViewController: UIViewController {
         // вызываем метод когда будем открывать данное вью
         
         setupPlacemark()
+    }
+    
+    // данный метод будет центровать карту на место положение пользователя
+
+    @IBAction func centerViewInUserLocation() {
+        
+        // проверяем доступность место положения пользователя если все хорошо
+        // то показываем его место положение на карте с помощью MKCoordinateRegion
+        
+        if let location = locationManager.location?.coordinate {
+            let region = MKCoordinateRegion(center: location,
+                                            latitudinalMeters: regionInMeters,
+                                            longitudinalMeters: regionInMeters)
+            
+            // setRegion изменяет текущию область видимости
+            
+            mapView.setRegion(region, animated: true)
+        }
     }
     
     @IBAction func closeVC(_ sender: Any) {
@@ -135,7 +158,14 @@ class MapViewController: UIViewController {
             checkLocationAuthorization()
             
         } else {
-            // show alert controller
+            // показываем алерт в главном потоке с пустя одну секунду
+            // пожно было сделать что бы алерт выходил в методе viewDidApear
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.showAlert(
+                    title: "Location Services are Disabled",
+                    message: "To enable it go: Settings -> Privacy -> Location Services and turn On")
+            }
         }
     }
     
@@ -177,6 +207,17 @@ class MapViewController: UIViewController {
         @unknown default:
             print("New case is avaible")
         }
+    }
+    
+    // алерт контролеер когда служба геолокации не доступна
+    
+    private func showAlert(title: String, message: String) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAlert = UIAlertAction(title: "Ok", style: .default)
+        
+        alert.addAction(okAlert)
+        present(alert, animated: true)
     }
     
 }
@@ -246,7 +287,7 @@ extension MapViewController: MKMapViewDelegate {
     
 }
 
-//
+// обновляем положение пользователя на карте
 
 extension MapViewController: CLLocationManagerDelegate {
     
