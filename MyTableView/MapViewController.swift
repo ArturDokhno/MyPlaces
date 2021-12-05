@@ -10,11 +10,7 @@ import MapKit
 
 class MapViewController: UIViewController {
     
-    // можем извлечь принудительно так как данные при переходе
-    // будут браться из ячейки которая уже заполнена всеми
-    // необходимыми данными
-    
-    var place: Place!
+    var place = Place()
     
     // индификатор для метода dequeueReusableAnnotationView (withIdentifier :)
     
@@ -141,7 +137,7 @@ extension MapViewController: MKMapViewDelegate {
         if annotationView == nil {
             annotationView = MKPinAnnotationView(
                 annotation: annotation,
-                reuseIdentifier: annotationIdentifie) as! MKPinAnnotationView
+                reuseIdentifier: annotationIdentifie)
             
             // canShowCallout позволит отобразить дополнительную анотацию в виде банера
             
@@ -149,6 +145,7 @@ extension MapViewController: MKMapViewDelegate {
         }
         
         // создаем свойсво в котором будем хранить изображение для отображения в банере
+        // добавляем размер изображению которое будет отображаться в банере
         
         let imageView = UIImageView(frame: CGRect(x: 0,
                                                   y: 0,
@@ -172,9 +169,6 @@ extension MapViewController: MKMapViewDelegate {
             
             annotationView?.rightCalloutAccessoryView = imageView
         }
-        
-
-        
         return annotationView
     }
     

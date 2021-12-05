@@ -120,18 +120,18 @@ class NewPlaceViewController: UITableViewController {
         
         // если переход не showMap то выходи от суда
         
-        if segue.identifier != "showMap" {
-            return
-        }
+        if segue.identifier != "showMap" { return }
         
         // если да то создаем экземпляр класса MapViewController
         
         let mapVC = segue.destination as! MapViewController
         
-        // передае туда в свойство place currentPlace из этого класса
-        // тоесть выбраное место пользователем
+        // передаю в mapVC данные из текстового поля
         
-        mapVC.place = currentPlace
+        mapVC.place.name = namePlace.text!
+        mapVC.place.location = locationPlace.text
+        mapVC.place.type = typePlace.text
+        mapVC.place.imageData = imagePlace.image?.pngData()
     }
     
     // создаем метод сохранения нового обьекта
@@ -140,21 +140,8 @@ class NewPlaceViewController: UITableViewController {
         
         // создаем переменую в которую будем присваивать изображение
         
-        var image: UIImage?
-        
-        if imageIsChange {
-            
-            // присваиваем выбраное изображение пользователем
-            
-            image = imagePlace.image
-            
-        } else {
-            
-            // присваиваем свое изображение(стандартное)
-            
-            image = UIImage(named: "imagePlaceholder")
-        }
-        
+        let image = imageIsChange ? imagePlace.image : UIImage(named: "imagePlaceholder")
+
         let imageData = image?.pngData()
         
         // инициализируем класс подставляя параметры из текст филдов
