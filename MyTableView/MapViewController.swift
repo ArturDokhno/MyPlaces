@@ -7,8 +7,13 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
 class MapViewController: UIViewController {
+    
+    // экземпляр класса который позволит отслеживать место положение пользователя
+    
+    let locationManager = CLLocationManager()
     
     var place = Place()
     
@@ -20,6 +25,10 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // вызываем метод отслеживания место положения пользователя
+        
+        checkLocationServices()
         
         // назначаем делегатом данный класс который будет
         // ответственым за выполнения методов протокола MKMapViewDelegate
@@ -107,6 +116,69 @@ class MapViewController: UIViewController {
         }
     }
     
+    // проверяю если доступ к необходимым службам позволяющим отслеживать
+    // место положение пользователя
+    
+    private func checkLocationServices() {
+    
+        // locationServicesEnabled Возвращает логическое значение
+        // указывающее включены ли на устройстве службы определения местоположения
+        
+        if CLLocationManager.locationServicesEnabled() {
+            
+            // вызываем метод для отслеживания место положения
+            
+            setupLocationManager()
+            
+            // вызываем метод проверки статуса разрешения
+            
+            checkLocationAuthorization()
+            
+        } else {
+            // show alert controller
+        }
+    }
+    
+    // метод в котором сделаны первоначальные настройки LocationManager
+    
+    private func setupLocationManager() {
+        
+        // методы протокола CLLocationManagerDelegate будет выполнять данный класс
+        
+        locationManager.delegate = self
+        
+        // данный параметр позволяет получать точность данных о место положении
+        // kCLLocationAccuracyBest позволяет получить максимальную точность место положения
+        
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    }
+    
+    // метод отвечает за проверку статуса разрешения отслеживания место положения
+    
+    private func checkLocationAuthorization() {
+        
+        // есть пять уровней доступа к место положению пользоватля нужно проверить все
+        
+        switch CLLocationManager.authorizationStatus() {
+        case .authorizedWhenInUse:
+            mapView.showsUserLocation = true
+            break
+        case .denied:
+            // show alert controller
+            break
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+            break
+        case .restricted:
+            // show alert controller
+            break
+        case .authorizedAlways:
+            break
+        @unknown default:
+            print("New case is avaible")
+        }
+    }
+    
 }
 
 // данный протокол позволит более тонко настраивать банер на карте
@@ -172,4 +244,13 @@ extension MapViewController: MKMapViewDelegate {
         return annotationView
     }
     
+}
+
+//
+
+extension MapViewController: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        checkLocationAuthorization()
+    }
 }
