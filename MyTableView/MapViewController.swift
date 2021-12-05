@@ -15,11 +15,20 @@ class MapViewController: UIViewController {
     // необходимыми данными
     
     var place: Place!
+    
+    // индификатор для метода dequeueReusableAnnotationView (withIdentifier :)
+    
+    let annotationIdentifie = "annotationIdentifie"
 
     @IBOutlet var mapView: MKMapView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // назначаем делегатом данный класс который будет
+        // ответственым за выполнения методов протокола MKMapViewDelegate
+        
+        mapView.delegate = self
 
         // вызываем метод когда будем открывать данное вью
         
@@ -104,3 +113,69 @@ class MapViewController: UIViewController {
     
 }
 
+// данный протокол позволит более тонко настраивать банер на карте
+// так же имеет ряд других полезных функций
+ 
+extension MapViewController: MKMapViewDelegate {
+    
+    // Возвращает вид, связанный с указанным объектом аннотации
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        // нужно убедится что данный обьект не евляется место положением пользователя
+        // возваряем нил как пишут в документации что бы предоставить отображение
+        // пользователя на карте по умолчанию
+        
+        guard !(annotation is MKUserLocation) else { return nil }
+        
+        // вместо того что бы создовать новое представление при каждом вызове этого метода
+        // вызываем метод dequeueReusableAnnotationView (withIdentifier :) класса MKMapView
+        // чтобы узнать, существует ли уже существующее представление аннотации желаемого типа
+        
+        var annotationView = mapView.dequeueReusableAnnotationView(
+            withIdentifier: "annotationIdentifie")
+        
+        // если на карте нет представление с анотацией то
+        // инициализируем новый обьекст
+        
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView(
+                annotation: annotation,
+                reuseIdentifier: annotationIdentifie) as! MKPinAnnotationView
+            
+            // canShowCallout позволит отобразить дополнительную анотацию в виде банера
+            
+            annotationView?.canShowCallout = true
+        }
+        
+        // создаем свойсво в котором будем хранить изображение для отображения в банере
+        
+        let imageView = UIImageView(frame: CGRect(x: 0,
+                                                  y: 0,
+                                                  width: 50,
+                                                  height: 50))
+        
+        // извлекаю опциональное изображение place.imageData
+        
+        if let imageData = place.imageData {
+            
+            // округляем изображение
+            
+            imageView.layer.cornerRadius = 10
+            imageView.clipsToBounds = true
+            
+            // добавляем изображение в
+            
+            imageView.image = UIImage(data: imageData)
+            
+            // помещяем полученое изображение в сам банер
+            
+            annotationView?.rightCalloutAccessoryView = imageView
+        }
+        
+
+        
+        return annotationView
+    }
+    
+}
