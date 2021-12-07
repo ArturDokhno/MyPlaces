@@ -118,20 +118,30 @@ class NewPlaceViewController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        // если переход не showMap то выходи от суда
+        // извлекаем индификатор из segue
+        // если получается то создаем экземпляр класса MapViewController
         
-        if segue.identifier != "showMap" { return }
+        guard let identifier = segue.identifier,
+              let mapVC = segue.destination as? MapViewController
+        else { return }
         
-        // если да то создаем экземпляр класса MapViewController
+        // обращаемся к экземпляру и свойству incomeSegueIdentifier
+        // присваиваем identifier который извлекли в guard
         
-        let mapVC = segue.destination as! MapViewController
+        mapVC.incomeSegueIdentifier = identifier
         
+        // если индификатор showPlace то
         // передаю в mapVC данные из текстового поля
+        // для отображение в банере
         
-        mapVC.place.name = namePlace.text!
-        mapVC.place.location = locationPlace.text
-        mapVC.place.type = typePlace.text
-        mapVC.place.imageData = imagePlace.image?.pngData()
+        if identifier == "showPlace" {
+
+            mapVC.place.name = namePlace.text!
+            mapVC.place.location = locationPlace.text
+            mapVC.place.type = typePlace.text
+            mapVC.place.imageData = imagePlace.image?.pngData()
+        }
+   
     }
     
     // создаем метод сохранения нового обьекта

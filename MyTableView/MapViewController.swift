@@ -18,7 +18,12 @@ class MapViewController: UIViewController {
     // данное свойсво определяет метраж в центроки видимости места нахождения
     // пользователя на карте
     
-    let regionInMeters = 10_000.00
+    let regionInMeters = 5_000.00
+    
+    // данное свойсво будет принимать индификатор в зависимости
+    // от значения индификатора будем вызывать тот или иной метод
+    
+    var incomeSegueIdentifier = ""
     
     var place = Place()
     
@@ -27,6 +32,10 @@ class MapViewController: UIViewController {
     let annotationIdentifie = "annotationIdentifie"
 
     @IBOutlet var mapView: MKMapView!
+    @IBOutlet var mapPinImage: UIImageView!
+    @IBOutlet var doneButton: UIButton!
+    @IBOutlet var adressLabel: UILabel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,26 +50,17 @@ class MapViewController: UIViewController {
         mapView.delegate = self
 
         // вызываем метод когда будем открывать данное вью
+        // через индификатор showPlace
         
-        setupPlacemark()
+        setupMapView()
     }
-    
-    // данный метод будет центровать карту на место положение пользователя
 
     @IBAction func centerViewInUserLocation() {
         
-        // проверяем доступность место положения пользователя если все хорошо
-        // то показываем его место положение на карте с помощью MKCoordinateRegion
-        
-        if let location = locationManager.location?.coordinate {
-            let region = MKCoordinateRegion(center: location,
-                                            latitudinalMeters: regionInMeters,
-                                            longitudinalMeters: regionInMeters)
-            
-            // setRegion изменяет текущию область видимости
-            
-            mapView.setRegion(region, animated: true)
-        }
+        showUserLocation()
+    }
+    
+    @IBAction func doneButtonPressed() {
     }
     
     @IBAction func closeVC(_ sender: Any) {
@@ -68,6 +68,23 @@ class MapViewController: UIViewController {
         // данный метод закрывает текущее вью и выводит его из памяти
         
         dismiss(animated: true)
+    }
+    
+    // метод setupPlacemark будет срабатывать когда
+    // индификатор по которому перешли будет равен showPlace
+    
+    private func setupMapView() {
+        
+        if incomeSegueIdentifier == "showPlace" {
+            setupPlacemark()
+            
+            // скрываем mapPinImage, adressLabel и doneButton
+            // если пользователь перешел по этому индификатора
+            
+            mapPinImage.isHidden = true
+            adressLabel.isHidden = true
+            doneButton.isHidden = true
+        }
     }
     
     // метод присваивает маркер для места
@@ -192,6 +209,14 @@ class MapViewController: UIViewController {
         switch CLLocationManager.authorizationStatus() {
         case .authorizedWhenInUse:
             mapView.showsUserLocation = true
+            
+            // если индификатор по которому перейдет пользователь будет
+            // getAdress вызываем метод showUserLocation()
+            
+            if incomeSegueIdentifier == "getAdress" {
+                showUserLocation()
+            }
+            
             break
         case .denied:
             // show alert controller
@@ -206,6 +231,25 @@ class MapViewController: UIViewController {
             break
         @unknown default:
             print("New case is avaible")
+        }
+    }
+    
+    // данный метод будет центровать карту на место положение пользователя
+    // и получения адреса для кнопки в текстовом поле адресс во вью NewPlaceVC
+    
+    private func showUserLocation() {
+        
+        // проверяем доступность место положения пользователя если все хорошо
+        // то показываем его место положение на карте с помощью MKCoordinateRegion
+        
+        if let location = locationManager.location?.coordinate {
+            let region = MKCoordinateRegion(center: location,
+                                            latitudinalMeters: regionInMeters,
+                                            longitudinalMeters: regionInMeters)
+            
+            // setRegion изменяет текущию область видимости
+            
+            mapView.setRegion(region, animated: true)
         }
     }
     

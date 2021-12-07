@@ -155,7 +155,7 @@
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" image="map"/>
                                                     <connections>
-                                                        <segue destination="J7N-dE-7b2" kind="presentation" identifier="showMap" id="6uk-Gn-jrH"/>
+                                                        <segue destination="J7N-dE-7b2" kind="presentation" identifier="showPlace" id="6uk-Gn-jrH"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -218,16 +218,16 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="By9-8R-E6i">
-                                                    <rect key="frame" x="15" y="10" width="398" height="65"/>
+                                                    <rect key="frame" x="15" y="10" width="356" height="65"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BYb-ug-i2c">
-                                                            <rect key="frame" x="0.0" y="0.0" width="398" height="25.666666666666668"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="356" height="25.666666666666668"/>
                                                             <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="Location name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vua-kF-jjS">
-                                                            <rect key="frame" x="0.0" y="35.666666666666664" width="398" height="29.333333333333336"/>
+                                                            <rect key="frame" x="0.0" y="35.666666666666664" width="356" height="29.333333333333336"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                                                             <connections>
@@ -236,12 +236,26 @@
                                                         </textField>
                                                     </subviews>
                                                 </stackView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UIc-4N-Xxc">
+                                                    <rect key="frame" x="386" y="31.666666666666671" width="22" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="22" id="Ll8-iv-C9q"/>
+                                                        <constraint firstAttribute="height" constant="22" id="S5g-WJ-tAm"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" image="location.magnifyingglass" catalog="system"/>
+                                                    <connections>
+                                                        <segue destination="J7N-dE-7b2" kind="presentation" identifier="getAdress" id="YLe-uy-5uI"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="By9-8R-E6i" secondAttribute="trailing" constant="15" id="EUj-xH-9Ds"/>
+                                                <constraint firstItem="UIc-4N-Xxc" firstAttribute="trailing" secondItem="wgV-sg-1wK" secondAttribute="trailingMargin" id="5bd-LH-XRK"/>
+                                                <constraint firstItem="UIc-4N-Xxc" firstAttribute="leading" secondItem="By9-8R-E6i" secondAttribute="trailing" constant="15" id="FtD-vD-hBW"/>
                                                 <constraint firstItem="By9-8R-E6i" firstAttribute="leading" secondItem="wgV-sg-1wK" secondAttribute="leading" constant="15" id="Jxx-le-SqS"/>
                                                 <constraint firstAttribute="bottom" secondItem="By9-8R-E6i" secondAttribute="bottom" constant="10" id="ad6-Lj-182"/>
                                                 <constraint firstItem="By9-8R-E6i" firstAttribute="top" secondItem="wgV-sg-1wK" secondAttribute="top" constant="10" id="d5b-jU-XJX"/>
+                                                <constraint firstItem="UIc-4N-Xxc" firstAttribute="centerY" secondItem="wgV-sg-1wK" secondAttribute="centerY" id="zbi-lJ-DzP"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
@@ -360,8 +374,32 @@
                                     <action selector="closeVC:" destination="J7N-dE-7b2" eventType="touchUpInside" id="gwo-G3-5Jg"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pin" translatesAutoresizingMaskIntoConstraints="NO" id="6jO-0F-xyl">
+                                <rect key="frame" x="194" y="423" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Vcr-pY-6lp"/>
+                                    <constraint firstAttribute="width" constant="40" id="yZA-bM-zOm"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Adress" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="hxq-l1-3si">
+                                <rect key="frame" x="20" y="194" width="388" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uGK-C8-MII">
+                                <rect key="frame" x="166" y="803" width="96" height="49"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Done">
+                                    <fontDescription key="titleFontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="30"/>
+                                    <color key="baseForegroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="doneButtonPressed" destination="J7N-dE-7b2" eventType="touchUpInside" id="tCK-N1-uYm"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t9Z-zp-bPr">
-                                <rect key="frame" x="358" y="842" width="50" height="50"/>
+                                <rect key="frame" x="358" y="44" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="9iL-NU-hmz"/>
                                     <constraint firstAttribute="height" constant="50" id="UzH-6J-iHJ"/>
@@ -378,15 +416,26 @@
                         <constraints>
                             <constraint firstItem="ph2-C9-bSG" firstAttribute="leading" secondItem="aG4-WC-5vN" secondAttribute="leading" id="20z-7W-YMz"/>
                             <constraint firstItem="aG4-WC-5vN" firstAttribute="trailing" secondItem="ph2-C9-bSG" secondAttribute="trailing" id="55P-uM-8JX"/>
+                            <constraint firstItem="6jO-0F-xyl" firstAttribute="centerY" secondItem="lgb-FX-cKg" secondAttribute="centerY" constant="-20" id="EoL-p4-DW4"/>
+                            <constraint firstItem="hxq-l1-3si" firstAttribute="top" secondItem="aG4-WC-5vN" secondAttribute="top" constant="150" id="Iux-lc-Z4r"/>
+                            <constraint firstItem="aG4-WC-5vN" firstAttribute="trailing" secondItem="t9Z-zp-bPr" secondAttribute="trailing" constant="20" id="KjM-Hg-m11"/>
+                            <constraint firstItem="hxq-l1-3si" firstAttribute="centerX" secondItem="lgb-FX-cKg" secondAttribute="centerX" id="SNt-6s-Vam"/>
                             <constraint firstItem="ifq-NP-rwT" firstAttribute="leading" secondItem="aG4-WC-5vN" secondAttribute="leading" constant="20" id="Tb1-ti-qEc"/>
-                            <constraint firstItem="t9Z-zp-bPr" firstAttribute="bottom" secondItem="aG4-WC-5vN" secondAttribute="bottom" id="aBR-dR-icZ"/>
+                            <constraint firstItem="uGK-C8-MII" firstAttribute="centerX" secondItem="lgb-FX-cKg" secondAttribute="centerX" id="XF4-WE-v7m"/>
                             <constraint firstItem="ifq-NP-rwT" firstAttribute="top" secondItem="aG4-WC-5vN" secondAttribute="top" id="bFb-Qb-lkR"/>
+                            <constraint firstItem="t9Z-zp-bPr" firstAttribute="top" secondItem="aG4-WC-5vN" secondAttribute="top" id="bya-oh-9GG"/>
+                            <constraint firstItem="aG4-WC-5vN" firstAttribute="bottom" secondItem="uGK-C8-MII" secondAttribute="bottom" constant="40" id="c57-4j-UXc"/>
                             <constraint firstItem="ph2-C9-bSG" firstAttribute="top" secondItem="lgb-FX-cKg" secondAttribute="top" id="h8W-hG-Ifz"/>
-                            <constraint firstItem="aG4-WC-5vN" firstAttribute="trailing" secondItem="t9Z-zp-bPr" secondAttribute="trailing" constant="20" id="tkf-1n-Io7"/>
+                            <constraint firstItem="aG4-WC-5vN" firstAttribute="trailing" secondItem="hxq-l1-3si" secondAttribute="trailing" constant="20" id="l7o-ok-RJg"/>
+                            <constraint firstItem="hxq-l1-3si" firstAttribute="leading" secondItem="aG4-WC-5vN" secondAttribute="leading" constant="20" id="ncp-B0-Tr6"/>
+                            <constraint firstItem="6jO-0F-xyl" firstAttribute="centerX" secondItem="lgb-FX-cKg" secondAttribute="centerX" id="wyn-RF-t5W"/>
                             <constraint firstAttribute="bottom" secondItem="ph2-C9-bSG" secondAttribute="bottom" id="ydj-Nu-Ip3"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="adressLabel" destination="hxq-l1-3si" id="Df4-r9-CuR"/>
+                        <outlet property="doneButton" destination="uGK-C8-MII" id="sEs-sb-K8R"/>
+                        <outlet property="mapPinImage" destination="6jO-0F-xyl" id="eJt-sB-Fzf"/>
                         <outlet property="mapView" destination="ph2-C9-bSG" id="9xc-q2-dNy"/>
                     </connections>
                 </viewController>
@@ -439,11 +488,14 @@
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
+        <segue reference="6uk-Gn-jrH"/>
         <segue reference="WeE-0Y-f3l"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="AZ" width="25" height="24"/>
         <image name="Photo" width="194.66667175292969" height="195.66667175292969"/>
+        <image name="Pin" width="40" height="40"/>
+        <image name="location.magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="location.north.circle" catalog="system" width="128" height="121"/>
         <image name="map" width="50" height="50"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
