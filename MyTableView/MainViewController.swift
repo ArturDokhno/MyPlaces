@@ -108,7 +108,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         if isFiltering {
             return filteredPlaces.count
         }
-    
+        
         // если база пустая возвращаем количесво ячеек 0
         // если нет то возвращаем количесво ячеек равной
         // количеству моделей в базе
@@ -126,7 +126,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         // значения из массива places по индексу
         
         let place = isFiltering ? filteredPlaces[indexPath.row] : places[indexPath.row]
-
+        
         cell.nameLabel.text = place.name
         cell.locationlabel.text = place.location
         cell.typeLabel.text = place.type
@@ -134,7 +134,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         // imageData не будет пустым можем извлечь принудительно
         
         cell.imageOfPlace.image = UIImage(data: place.imageData!)
-
+        
         
         return cell
     }
@@ -328,7 +328,7 @@ extension MainViewController: UISearchResultsUpdating {
         // в %@ подставляются переменная searchText
         
         filteredPlaces = places.filter("name CONTAINS[c] %@ OR location CONTAINS[c] %@",
-        searchText, searchText)
+                                       searchText, searchText)
         
         // обновляем таблицу
         

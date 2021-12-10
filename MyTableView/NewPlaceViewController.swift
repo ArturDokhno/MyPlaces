@@ -135,13 +135,13 @@ class NewPlaceViewController: UITableViewController {
         // для отображение в банере
         
         if identifier == "showPlace" {
-
+            
             mapVC.place.name = namePlace.text!
             mapVC.place.location = locationPlace.text
             mapVC.place.type = typePlace.text
             mapVC.place.imageData = imagePlace.image?.pngData()
         }
-   
+        
     }
     
     // создаем метод сохранения нового обьекта
@@ -151,7 +151,7 @@ class NewPlaceViewController: UITableViewController {
         // создаем переменую в которую будем присваивать изображение
         
         let image = imageIsChange ? imagePlace.image : UIImage(named: "imagePlaceholder")
-
+        
         let imageData = image?.pngData()
         
         // инициализируем класс подставляя параметры из текст филдов

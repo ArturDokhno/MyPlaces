@@ -30,7 +30,7 @@ class MapViewController: UIViewController {
     // индификатор для метода dequeueReusableAnnotationView (withIdentifier :)
     
     let annotationIdentifie = "annotationIdentifie"
-
+    
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var mapPinImage: UIImageView!
     @IBOutlet var doneButton: UIButton!
@@ -48,13 +48,15 @@ class MapViewController: UIViewController {
         // ответственым за выполнения методов протокола MKMapViewDelegate
         
         mapView.delegate = self
-
+        
         // вызываем метод когда будем открывать данное вью
         // через индификатор showPlace
         
         setupMapView()
+        
+        adressLabel.text = "" 
     }
-
+    
     @IBAction func centerViewInUserLocation() {
         
         showUserLocation()
@@ -160,7 +162,7 @@ class MapViewController: UIViewController {
     // место положение пользователя
     
     private func checkLocationServices() {
-    
+        
         // locationServicesEnabled Возвращает логическое значение
         // указывающее включены ли на устройстве службы определения местоположения
         
@@ -253,6 +255,23 @@ class MapViewController: UIViewController {
         }
     }
     
+    // метод определяющий координт под пином
+    
+    private func getCenterLocation(for mapView: MKMapView) -> CLLocation {
+        
+        // определяем центр карты через centerCoordinate
+        // создав для этого константы ширины и долготы
+        
+        let latitude = mapView.centerCoordinate.latitude
+        let longitude = mapView.centerCoordinate.longitude
+        
+        // нужно вернуть кординаты точки поэтому вызываем класс CLLocation
+        // и передаем туда в качестве параметров ранее созданые константы
+        // ширины и долготы места на которое указывает пин
+        
+        return CLLocation(latitude: latitude, longitude: longitude)
+    }
+    
     // алерт контролеер когда служба геолокации не доступна
     
     private func showAlert(title: String, message: String) {
@@ -268,7 +287,7 @@ class MapViewController: UIViewController {
 
 // данный протокол позволит более тонко настраивать банер на карте
 // так же имеет ряд других полезных функций
- 
+
 extension MapViewController: MKMapViewDelegate {
     
     // Возвращает вид, связанный с указанным объектом аннотации
@@ -327,6 +346,66 @@ extension MapViewController: MKMapViewDelegate {
             annotationView?.rightCalloutAccessoryView = imageView
         }
         return annotationView
+    }
+    
+    // имплементирую метод протокола MKMapViewDelegate
+    // который позволит получить адрес места на которое указывает центр карты
+    // данный метод вызывается каждый раз когда меняется видимая область на карте
+    
+    func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
+        
+        // опередяем текущие кардинаты
+        
+        let center = getCenterLocation(for: mapView)
+        
+        // создаем экземпляр класса
+        
+        let geocoder = CLGeocoder()
+        
+        geocoder.reverseGeocodeLocation(center) { (placemarks, error) in
+            
+            // проверяем ошибки
+            
+            if let error = error {
+                print(error)
+                return
+            }
+            
+            // извликаем массив
+            
+            guard let placemarks = placemarks else { return }
+            
+            // данный массив содержит одну метку
+            // извлекаю ее в константу
+            // получаем обьект класса CLPlacemark
+            
+            let placemark = placemarks.first
+            
+            // извлекаем улицу и номер дома
+            
+            let streetName = placemark?.thoroughfare
+            let buildNumber = placemark?.subThoroughfare
+            
+            // передаем значения в лейбл
+            // согласно документации возвращаем результат в главный поток асинхронно
+            
+            DispatchQueue.main.async {
+                
+                // проверяем streetName и buildNumber на nil
+                // в блоке if можем уже принудительно извлечь опционал так как
+                // точно знаю что они не пустые
+                
+                if streetName != nil, buildNumber != nil {
+                    self.adressLabel.text = "\(streetName!), \(buildNumber!)"
+                } else if  streetName != nil {
+                    self.adressLabel.text = "\(streetName!)"
+                } else {
+                    self.adressLabel.text = ""
+                }
+                
+            }
+        }
+        
     }
     
 }
