@@ -245,7 +245,7 @@
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" image="location.magnifyingglass" catalog="system"/>
                                                     <connections>
-                                                        <segue destination="J7N-dE-7b2" kind="presentation" identifier="getAdress" id="YLe-uy-5uI"/>
+                                                        <segue destination="J7N-dE-7b2" kind="presentation" identifier="getAddress" id="YLe-uy-5uI"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -381,7 +381,7 @@
                                     <constraint firstAttribute="width" constant="40" id="yZA-bM-zOm"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Adress" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="hxq-l1-3si">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Address" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="hxq-l1-3si">
                                 <rect key="frame" x="20" y="194" width="388" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <nil key="textColor"/>
@@ -433,7 +433,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="adressLabel" destination="hxq-l1-3si" id="Df4-r9-CuR"/>
+                        <outlet property="addressLabel" destination="hxq-l1-3si" id="Df4-r9-CuR"/>
                         <outlet property="doneButton" destination="uGK-C8-MII" id="sEs-sb-K8R"/>
                         <outlet property="mapPinImage" destination="6jO-0F-xyl" id="eJt-sB-Fzf"/>
                         <outlet property="mapView" destination="ph2-C9-bSG" id="9xc-q2-dNy"/>
@@ -488,7 +488,7 @@
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
-        <segue reference="6uk-Gn-jrH"/>
+        <segue reference="YLe-uy-5uI"/>
         <segue reference="WeE-0Y-f3l"/>
     </inferredMetricsTieBreakers>
     <resources>

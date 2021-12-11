@@ -9,7 +9,24 @@ import UIKit
 import MapKit
 import CoreLocation
 
+// протокол для того что бы передавать данные адреса с карты в текстовое воле
+
+protocol MapViewControllerDelegate {
+    
+    // @objc optional это возволит сделать данный метод не обязательным
+    // можно так же через расширение сделать методы протокола не обязательными
+
+    // делаем address опциональным что бы при нажатии кнопки готово
+    // не нужно было извлекать опционал в методе getAddress
+    
+    func getAddress(_ address: String?)
+}
+
 class MapViewController: UIViewController {
+    
+    // обьявляем свойство класса с типом протокола
+    
+    var mapViewControllerDelegate: MapViewControllerDelegate?
     
     // экземпляр класса который позволит отслеживать место положение пользователя
     
@@ -34,7 +51,7 @@ class MapViewController: UIViewController {
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var mapPinImage: UIImageView!
     @IBOutlet var doneButton: UIButton!
-    @IBOutlet var adressLabel: UILabel!
+    @IBOutlet var addressLabel: UILabel!
     
     
     override func viewDidLoad() {
@@ -54,7 +71,7 @@ class MapViewController: UIViewController {
         
         setupMapView()
         
-        adressLabel.text = "" 
+        addressLabel.text = "" 
     }
     
     @IBAction func centerViewInUserLocation() {
@@ -63,6 +80,19 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func doneButtonPressed() {
+        
+        // вызываем метод протокола getAddress
+        // и предаем в него данные из поля addressLabel
+        // когда будем реализовать метод протокола в класса NewPlaceVC
+        // то метод getAddress будет уже иметь данные с поля addressLabel
+        
+        mapViewControllerDelegate?.getAddress(addressLabel.text)
+        
+        // методом dismiss закрываем текущее окно и передаем данные
+        // в NewPlaceVC там вызыву метод getAddress
+        // который уже будет содержать данные с поля addressLabel
+        
+        dismiss(animated: true)
     }
     
     @IBAction func closeVC(_ sender: Any) {
@@ -80,11 +110,11 @@ class MapViewController: UIViewController {
         if incomeSegueIdentifier == "showPlace" {
             setupPlacemark()
             
-            // скрываем mapPinImage, adressLabel и doneButton
+            // скрываем mapPinImage, addressLabel и doneButton
             // если пользователь перешел по этому индификатора
             
             mapPinImage.isHidden = true
-            adressLabel.isHidden = true
+            addressLabel.isHidden = true
             doneButton.isHidden = true
         }
     }
@@ -213,9 +243,9 @@ class MapViewController: UIViewController {
             mapView.showsUserLocation = true
             
             // если индификатор по которому перейдет пользователь будет
-            // getAdress вызываем метод showUserLocation()
+            // getAddress вызываем метод showUserLocation()
             
-            if incomeSegueIdentifier == "getAdress" {
+            if incomeSegueIdentifier == "getAddress" {
                 showUserLocation()
             }
             
@@ -396,11 +426,11 @@ extension MapViewController: MKMapViewDelegate {
                 // точно знаю что они не пустые
                 
                 if streetName != nil, buildNumber != nil {
-                    self.adressLabel.text = "\(streetName!), \(buildNumber!)"
+                    self.addressLabel.text = "\(streetName!), \(buildNumber!)"
                 } else if  streetName != nil {
-                    self.adressLabel.text = "\(streetName!)"
+                    self.addressLabel.text = "\(streetName!)"
                 } else {
-                    self.adressLabel.text = ""
+                    self.addressLabel.text = ""
                 }
                 
             }

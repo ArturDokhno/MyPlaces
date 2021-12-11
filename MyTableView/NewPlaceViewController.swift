@@ -125,6 +125,13 @@ class NewPlaceViewController: UITableViewController {
               let mapVC = segue.destination as? MapViewController
         else { return }
         
+        // обращаемся к экземпляру класса mapVC
+        // и его свойству mapViewControllerDelegate
+        // назначаем ответственым за выполнение методов
+        // данного протокола сам класс
+        
+        mapVC.mapViewControllerDelegate = self
+        
         // обращаемся к экземпляру и свойству incomeSegueIdentifier
         // присваиваем identifier который извлекли в guard
         
@@ -362,3 +369,19 @@ extension NewPlaceViewController: UIImagePickerControllerDelegate, UINavigationC
     }
     
 }
+
+// подписываем данный класс под протокол MapViewContrillerDelegate
+
+extension NewPlaceViewController: MapViewControllerDelegate {
+    
+    // передаем данные адреса из метода getAddress
+    // в поле locationPlace так как оно уже содержит
+    // необходимые данные или не содержит так как это опционал 
+    
+    func getAddress(_ address: String?) {
+        locationPlace.text = address
+    }
+    
+}
+
+
