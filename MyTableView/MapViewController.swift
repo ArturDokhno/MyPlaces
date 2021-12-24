@@ -48,10 +48,16 @@ class MapViewController: UIViewController {
     
     let annotationIdentifie = "annotationIdentifie"
     
+    // данное свойство принимает координаты заведения
+    // для построения маршрута от пользователя до места
+    
+    var placeCoordinate: CLLocationCoordinate2D?
+    
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var mapPinImage: UIImageView!
     @IBOutlet var doneButton: UIButton!
     @IBOutlet var addressLabel: UILabel!
+    @IBOutlet var goButton: UIButton!
     
     
     override func viewDidLoad() {
@@ -107,6 +113,10 @@ class MapViewController: UIViewController {
     
     private func setupMapView() {
         
+        // скрываем кнопку прокладывая маршрута от пользователя до места
+        
+        goButton.isHidden = true
+        
         if incomeSegueIdentifier == "showPlace" {
             setupPlacemark()
             
@@ -116,7 +126,15 @@ class MapViewController: UIViewController {
             mapPinImage.isHidden = true
             addressLabel.isHidden = true
             doneButton.isHidden = true
+            
+            // при переходе по showPlace снова отображаем кнопку
+            
+            goButton.isHidden = false
         }
+    }
+    
+    @IBAction func goButtonPressed() {
+        
     }
     
     // метод присваивает маркер для места
@@ -175,6 +193,11 @@ class MapViewController: UIViewController {
             // привязываю анотацию к точке на карте
             
             annotation.coordinate = placemarkLocation.coordinate
+            
+            // передаю координаты места в свойство placeCoordinate для
+            // построения маршрута от пользователя к месту
+            
+            self.placeCoordinate = placemarkLocation.coordinate
             
             // задаем видиную область на карте что бы видно было все созданые анотации
             // вызываем метод showAnnotations помещая туда анотацией annotation
@@ -300,6 +323,110 @@ class MapViewController: UIViewController {
         // ширины и долготы места на которое указывает пин
         
         return CLLocation(latitude: latitude, longitude: longitude)
+    }
+    
+    // метод для построения маршрута от пользователя до места
+    
+    private func getDirections() {
+        
+        // определяю место положения пользователя
+        
+        guard let location = locationManager.location?.coordinate else {
+            
+            // если место нахождения не определилось то появится предупреждение
+            
+            showAlert(title: "Error", message: "Current location is not found")
+            return
+        }
+        
+        // запрос на создания маршура в параметр подставляю место положения пользователя
+        // так как createDirectionRequest возвращяет опционал извлекаю его
+        
+        guard let request = createDirectionRequest(from: location) else {
+            showAlert(title: "Error", message: "Distination is not found")
+            return
+        }
+        
+        // создаем маршрут на основе данных которые получили
+        
+        let directions = MKDirections(request: request)
+        
+        // запускаю расчет маршрута
+        // данный метод возвращет расчитаный маршрут со всеми данными
+        
+        directions.calculate { (response, error) in
+            
+            // извлекаю ошибку
+            
+            if let error = error {
+                print(error)
+                return
+            }
+            
+            // пробую извлечь маршрут
+            
+            guard let response = response else {
+                
+                // если не получилось извлечь маршрут выводим сообщение об ошибке
+                
+                self.showAlert(title: "Error", message: "Directions is not available")
+                return
+            }
+            
+            // обьект response содержит массив с маршрутами
+            // перебираю массив 
+            
+            
+        }
+    }
+    
+    // метод для настройки запроса построения маршрута
+    // принимает координаты
+    // возворащяет настроеный запрос который опциональный
+    // его и будем использовать в getDirections
+    
+    private func createDirectionRequest(from coordinate: CLLocationCoordinate2D) -> MKDirections.Request? {
+        
+        // определяем координаты место назначения
+        // для этого нужно проверять координаты места куда
+        // будет строится маршрут от пользователя
+        // просто так выйди не можем так как нужно передать MKDirections.Request?
+        // поэтому в гуарде возвращяем нил
+        
+        guard let destinationCoordinate = placeCoordinate else { return nil }
+        
+        // создаем точку старата маршрута
+        
+        let startLocation = MKPlacemark(coordinate: coordinate)
+        
+        // создаем точку прибытия
+        
+        let destination = MKPlacemark(coordinate: destinationCoordinate)
+        
+        // создаю запрос на построение маршрута от старта до прибытия
+        
+        let request = MKDirections.Request()
+        
+        // определяю стартовую точку маршрута
+        
+        request.source = MKMapItem(placemark: startLocation)
+        
+        // определяю конечную точку маршрута
+        
+        request.destination = MKMapItem(placemark: destination)
+        
+        // задаем тип транспорта для маршрута
+        
+        request.transportType = .automobile
+        
+        // данное свойство позволяет показывать пользователю
+        // разные разные альтернативные маршруты на карте
+        
+        request.requestsAlternateRoutes = true
+        
+        // возвращаем обьект request
+        
+        return request
     }
     
     // алерт контролеер когда служба геолокации не доступна

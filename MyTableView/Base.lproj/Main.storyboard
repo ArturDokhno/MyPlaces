@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6T1-CU-t4f">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6T1-CU-t4f">
     <device id="retina6_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -143,7 +143,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Photo" translatesAutoresizingMaskIntoConstraints="NO" id="qlh-vr-L3o">
-                                                    <rect key="frame" x="0.0" y="0.0" width="428" height="250"/>
+                                                    <rect key="frame" x="57" y="0.0" width="296" height="250"/>
                                                     <color key="backgroundColor" systemColor="systemGray6Color"/>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cNL-tp-5VX">
@@ -159,15 +159,17 @@
                                                     </connections>
                                                 </button>
                                             </subviews>
+                                            <color key="backgroundColor" red="0.94901961089999998" green="0.94901961089999998" blue="0.96862745289999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="qlh-vr-L3o" secondAttribute="bottom" id="3aF-9f-7rd"/>
-                                                <constraint firstItem="qlh-vr-L3o" firstAttribute="leading" secondItem="xvv-DP-BtZ" secondAttribute="leading" id="AKn-7Q-48R"/>
-                                                <constraint firstAttribute="trailing" secondItem="qlh-vr-L3o" secondAttribute="trailing" id="GHr-Ut-Yes"/>
+                                                <constraint firstItem="qlh-vr-L3o" firstAttribute="leading" secondItem="xvv-DP-BtZ" secondAttribute="leading" constant="57" id="AKn-7Q-48R"/>
+                                                <constraint firstAttribute="trailing" secondItem="qlh-vr-L3o" secondAttribute="trailing" constant="75" id="GHr-Ut-Yes"/>
                                                 <constraint firstItem="cNL-tp-5VX" firstAttribute="trailing" secondItem="xvv-DP-BtZ" secondAttribute="trailingMargin" id="l7j-wi-djB"/>
                                                 <constraint firstItem="cNL-tp-5VX" firstAttribute="bottom" secondItem="xvv-DP-BtZ" secondAttribute="bottomMargin" id="ooq-bw-mp3"/>
                                                 <constraint firstItem="qlh-vr-L3o" firstAttribute="top" secondItem="xvv-DP-BtZ" secondAttribute="top" id="v5q-Xx-Rc0"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.94901961089999998" green="0.94901961089999998" blue="0.96862745289999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" image="YES" header="YES"/>
                                             <bool key="isElement" value="NO"/>
@@ -360,9 +362,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ifq-NP-rwT">
-                                <rect key="frame" x="20" y="44" width="50" height="50"/>
+                                <rect key="frame" x="19.999999999999996" y="44" width="42.666666666666657" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="5dl-Zq-b5T"/>
                                     <constraint firstAttribute="height" constant="50" id="FzK-m1-2be"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
@@ -410,12 +411,21 @@
                                     <action selector="centerViewInUserLocation" destination="J7N-dE-7b2" eventType="touchUpInside" id="xhe-v3-Vo2"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NWm-XQ-mjN">
+                                <rect key="frame" x="192" y="813" width="46" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="paperplane.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="goButtonPressed:" destination="J7N-dE-7b2" eventType="touchUpInside" id="VBP-Kr-JTG"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="aG4-WC-5vN"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="ph2-C9-bSG" firstAttribute="leading" secondItem="aG4-WC-5vN" secondAttribute="leading" id="20z-7W-YMz"/>
                             <constraint firstItem="aG4-WC-5vN" firstAttribute="trailing" secondItem="ph2-C9-bSG" secondAttribute="trailing" id="55P-uM-8JX"/>
+                            <constraint firstItem="aG4-WC-5vN" firstAttribute="trailing" secondItem="NWm-XQ-mjN" secondAttribute="trailing" constant="190" id="D8S-O3-LS3"/>
                             <constraint firstItem="6jO-0F-xyl" firstAttribute="centerY" secondItem="lgb-FX-cKg" secondAttribute="centerY" constant="-20" id="EoL-p4-DW4"/>
                             <constraint firstItem="hxq-l1-3si" firstAttribute="top" secondItem="aG4-WC-5vN" secondAttribute="top" constant="150" id="Iux-lc-Z4r"/>
                             <constraint firstItem="aG4-WC-5vN" firstAttribute="trailing" secondItem="t9Z-zp-bPr" secondAttribute="trailing" constant="20" id="KjM-Hg-m11"/>
@@ -425,9 +435,11 @@
                             <constraint firstItem="ifq-NP-rwT" firstAttribute="top" secondItem="aG4-WC-5vN" secondAttribute="top" id="bFb-Qb-lkR"/>
                             <constraint firstItem="t9Z-zp-bPr" firstAttribute="top" secondItem="aG4-WC-5vN" secondAttribute="top" id="bya-oh-9GG"/>
                             <constraint firstItem="aG4-WC-5vN" firstAttribute="bottom" secondItem="uGK-C8-MII" secondAttribute="bottom" constant="40" id="c57-4j-UXc"/>
+                            <constraint firstItem="NWm-XQ-mjN" firstAttribute="leading" secondItem="aG4-WC-5vN" secondAttribute="leading" constant="192" id="dze-QK-0sL"/>
                             <constraint firstItem="ph2-C9-bSG" firstAttribute="top" secondItem="lgb-FX-cKg" secondAttribute="top" id="h8W-hG-Ifz"/>
                             <constraint firstItem="aG4-WC-5vN" firstAttribute="trailing" secondItem="hxq-l1-3si" secondAttribute="trailing" constant="20" id="l7o-ok-RJg"/>
                             <constraint firstItem="hxq-l1-3si" firstAttribute="leading" secondItem="aG4-WC-5vN" secondAttribute="leading" constant="20" id="ncp-B0-Tr6"/>
+                            <constraint firstItem="aG4-WC-5vN" firstAttribute="bottom" secondItem="NWm-XQ-mjN" secondAttribute="bottom" constant="48" id="tgr-aZ-wke"/>
                             <constraint firstItem="6jO-0F-xyl" firstAttribute="centerX" secondItem="lgb-FX-cKg" secondAttribute="centerX" id="wyn-RF-t5W"/>
                             <constraint firstAttribute="bottom" secondItem="ph2-C9-bSG" secondAttribute="bottom" id="ydj-Nu-Ip3"/>
                         </constraints>
@@ -435,6 +447,7 @@
                     <connections>
                         <outlet property="addressLabel" destination="hxq-l1-3si" id="Df4-r9-CuR"/>
                         <outlet property="doneButton" destination="uGK-C8-MII" id="sEs-sb-K8R"/>
+                        <outlet property="goButton" destination="NWm-XQ-mjN" id="vM2-8u-yxp"/>
                         <outlet property="mapPinImage" destination="6jO-0F-xyl" id="eJt-sB-Fzf"/>
                         <outlet property="mapView" destination="ph2-C9-bSG" id="9xc-q2-dNy"/>
                     </connections>
@@ -498,6 +511,7 @@
         <image name="location.magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="location.north.circle" catalog="system" width="128" height="121"/>
         <image name="map" width="50" height="50"/>
+        <image name="paperplane.fill" catalog="system" width="128" height="118"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
