@@ -134,7 +134,7 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func goButtonPressed() {
-        
+        getDirections()
     }
     
     // метод присваивает маркер для места
@@ -374,9 +374,30 @@ class MapViewController: UIViewController {
             }
             
             // обьект response содержит массив с маршрутами
-            // перебираю массив 
+            // перебираю массив каждый элемент содержит возможный маршрут
             
-            
+            for route in response.routes {
+                
+                // polyline содержит полный путь маршрута
+                
+                self.mapView.addOverlay(route.polyline)
+                
+                // setVisibleMapRect опеределяет зону видимости карты по которой
+                // определится маршрут
+                
+                self.mapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
+                
+                // определяю растояние маршрута
+                
+                let distance = String(format: "%.1f",route.distance / 1000)
+                
+                // определяю время в пути
+                
+                let timeInterval = String(format: "%.1f", route.expectedTravelTime / 60)
+                
+                print("Растояние до места: \(distance)")
+                print("Время в пути составит: \(timeInterval)")
+            }
         }
     }
     
@@ -559,10 +580,21 @@ extension MapViewController: MKMapViewDelegate {
                 } else {
                     self.addressLabel.text = ""
                 }
-                
             }
         }
+    }
+    
+    // вызываем метод который отобразит линию маршрута на карте
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         
+        let renderer = MKPolylineRenderer(overlay: overlay as! MKPolyline)
+        
+        // крашу линию
+        
+        renderer.strokeColor = .blue
+        
+        return renderer
     }
     
 }
