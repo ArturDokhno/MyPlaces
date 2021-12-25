@@ -35,7 +35,7 @@ class MapViewController: UIViewController {
     // данное свойсво определяет метраж в центроки видимости места нахождения
     // пользователя на карте
     
-    let regionInMeters = 5_000.00
+    let regionInMeters = 1_000.00
     
     // данное свойсво будет принимать индификатор в зависимости
     // от значения индификатора будем вызывать тот или иной метод
@@ -52,6 +52,18 @@ class MapViewController: UIViewController {
     // для построения маршрута от пользователя до места
     
     var placeCoordinate: CLLocationCoordinate2D?
+    
+    // массив в котором храним маршруты
+    
+    var directionsArray: [MKDirections] = []
+    
+    // переменая которая будет хранить предыдущие место положение пользователя
+    
+    var previousLocation: CLLocation? {
+        didSet {
+            startTrackingUserLocation()
+        }
+    }
     
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var mapPinImage: UIImageView!
@@ -131,6 +143,28 @@ class MapViewController: UIViewController {
             
             goButton.isHidden = false
         }
+    }
+    
+    // метод который будет очищять маршруты пред построением новых
+    
+    private func resetMapview(withNew directions: MKDirections) {
+        
+        // удаляю с карты текущие наложения на карте
+        
+        mapView.removeOverlays(mapView.overlays)
+        
+        // добавляю в массив текущие массивы
+        
+        directionsArray.append(directions)
+        
+        // через замыкание перебираем все значения в массиве
+        // отменяем у каждого элеманта маршрут
+        
+        let _ = directionsArray.map { $0.cancel() }
+        
+        // удаляем все элементы из массива
+        
+        directionsArray.removeAll()
     }
     
     @IBAction func goButtonPressed() {
@@ -308,6 +342,29 @@ class MapViewController: UIViewController {
         }
     }
     
+    // метод для отлеживания положение узера
+    
+    private func startTrackingUserLocation() {
+        
+        guard let previousLocation = previousLocation else { return }
+        let center = getCenterLocation(for: mapView)
+        
+        // если растояние от предыдущего место положение пользователя
+        // до конечной точки более 50 метров то отлеживаем
+        // центруя карту на место положение пользователя
+        
+        guard center.distance(from: previousLocation) > 50 else { return }
+        
+        self.previousLocation = center
+        
+        // делаю задержку в 3 сенкунды что бы сразу карта не перепрыгивала
+        // на новое место положение, делаю это через диспач
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.showUserLocation()
+        }
+    }
+    
     // метод определяющий координт под пином
     
     private func getCenterLocation(for mapView: MKMapView) -> CLLocation {
@@ -339,10 +396,17 @@ class MapViewController: UIViewController {
             return
         }
         
+        // включаю режим постоянного отлеживания место положения пользователя
+        // данный режим включаю после того как маршрут определен
+        
+        locationManager.startUpdatingLocation()
+        previousLocation = CLLocation(latitude: location.latitude,
+                                      longitude: location.longitude)
+        
         // запрос на создания маршура в параметр подставляю место положения пользователя
         // так как createDirectionRequest возвращяет опционал извлекаю его
         
-        guard let request = createDirectionRequest(from: location) else {
+        guard let request = createDirectionsRequest(from: location) else {
             showAlert(title: "Error", message: "Distination is not found")
             return
         }
@@ -350,6 +414,10 @@ class MapViewController: UIViewController {
         // создаем маршрут на основе данных которые получили
         
         let directions = MKDirections(request: request)
+        
+        // удаляю все старые маршруты перед построением новых
+        
+        resetMapview(withNew: directions)
         
         // запускаю расчет маршрута
         // данный метод возвращет расчитаный маршрут со всеми данными
@@ -406,7 +474,7 @@ class MapViewController: UIViewController {
     // возворащяет настроеный запрос который опциональный
     // его и будем использовать в getDirections
     
-    private func createDirectionRequest(from coordinate: CLLocationCoordinate2D) -> MKDirections.Request? {
+    private func createDirectionsRequest(from coordinate: CLLocationCoordinate2D) -> MKDirections.Request? {
         
         // определяем координаты место назначения
         // для этого нужно проверять координаты места куда
@@ -539,6 +607,19 @@ extension MapViewController: MKMapViewDelegate {
         // создаем экземпляр класса
         
         let geocoder = CLGeocoder()
+        
+        // есди перехожим на карту по showPlace то
+        // с зарержной 3 секунды вызываем метод showUserLocation
+        
+        if incomeSegueIdentifier == "showPlace" && previousLocation != nil {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                self.showUserLocation()
+            }
+        }
+        
+        // для освобождение ресурсов вызываем метод cancelGeocode
+        
+        geocoder.cancelGeocode()
         
         geocoder.reverseGeocodeLocation(center) { (placemarks, error) in
             
