@@ -416,7 +416,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="paperplane.fill" catalog="system"/>
                                 <connections>
-                                    <action selector="goButtonPressed:" destination="J7N-dE-7b2" eventType="touchUpInside" id="VBP-Kr-JTG"/>
+                                    <action selector="goButtonPressed" destination="J7N-dE-7b2" eventType="touchUpInside" id="6Tv-aE-5cH"/>
                                 </connections>
                             </button>
                         </subviews>

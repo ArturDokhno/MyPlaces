@@ -14,46 +14,37 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     // searchResultsController передаем nil
     // что бы сообщить UISearchController что будем использовать тот же
     // View для отображения результатов поиска
-    
     private var searchController = UISearchController(searchResultsController: nil)
     
     // загружаем наши данные из таблицы Realm
     // Results позволяет работать с данными в реальном времени
-    
     private var places: Results<Place>!
     
     // вспомогательно свойство для сортировки возростанию или убыванию
     // которое мы будем менять при нажатии кнопки
-    
     private var ascendingSorting = true
     
     // массив в котором будет хранится отфильтрованые данные
     // с помощью поисковика
-    
     private var filteredPlaces: Results<Place>!
     
     // булевое значение которое указывает пустая строка поиска или нет
-    
     private var seachBarIsEmpty: Bool {
         
         // извлекаем опционал текст из поиска если не получится
         // вернем фолс, значит строка поиска не пустая
-        
         guard let text = searchController.searchBar.text else { return false }
         
         // если строка поиска пустая вернется тру
-        
         return text.isEmpty
     }
     
     // свойсвто которое будет отслеживать что отображать в таблице
     // данные из массива filteredPlaces или places
-    
     private var isFiltering: Bool {
         
         // поисковоя строка активирована и не пустая
         // тогда вернем тру
-        
         return searchController.isActive && !seachBarIsEmpty
     }
     
@@ -68,31 +59,24 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         // инициализируя places и вызывая метод objects
         // стави .self указывая что нужно нам именно тип данных Place
         // а не модель данных
-        
         places = realm.objects(Place.self)
         
         // Настраиваем ascendingSorting
-        
         // сообщаем segmentedControl что получаетелем изменений текста
         // в поисковите должен быть данный класс
-        
         searchController.searchResultsUpdater = self
         
         // позволяем управлять данными который выдаст поиск
         // сможем редактировать или удалять ячейки
-        
         searchController.obscuresBackgroundDuringPresentation = false
         
         // присваиваем название поисковой строки
-        
         searchController.searchBar.placeholder = "Search"
         
         // интегрируем строку поиска в navigation bar
-        
         navigationItem.searchController = searchController
         
         // позвоялем отпускать строку поиска при переходе на другой экран
-        
         definesPresentationContext = true
         
     }
@@ -104,7 +88,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         // если isFiltering возвращает тру то
         // отображаем количесво ячеек из массива filteredPlaces
         // иначе из массива places
-        
         if isFiltering {
             return filteredPlaces.count
         }
@@ -112,7 +95,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         // если база пустая возвращаем количесво ячеек 0
         // если нет то возвращаем количесво ячеек равной
         // количеству моделей в базе
-        
         return places.count
         
     }
@@ -124,7 +106,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         // значения из массива filteredPlaces по индексу
         // если fals то присваиваем массиву place
         // значения из массива places по индексу
-        
         let place = isFiltering ? filteredPlaces[indexPath.row] : places[indexPath.row]
         
         cell.nameLabel.text = place.name
@@ -132,9 +113,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.typeLabel.text = place.type
         
         // imageData не будет пустым можем извлечь принудительно
-        
         cell.imageOfPlace.image = UIImage(data: place.imageData!)
-        
         
         return cell
     }
@@ -146,38 +125,31 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     // метод вызывающий дейсвие при свайпи ячейки
-    
     func tableView(_ tableView: UITableView,
                    editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
         // определяем обьекст для удаления
         // берем обьект из массива places по индексу текущей строки
-        
         let place = places[indexPath.row]
         
         // создаем дейсвие удаления с загодлвком "Delete"
         // параметр стаил ставим дефолд что бы наша кнопка была красной
-        
         let deleteAction = UITableViewRowAction(style: .default,
                                                 title: "Delete") { (_, _) in
             
             // удаляем обьект из базы данных
-            
             StorageManager.deleteObject(place)
             
             // удаляем строку по индексу
-            
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         
         // возвращаем дейсвие deleteAction в виде массива как и просит метод
-        
         return [deleteAction]
         
     }
     
-    // убираем выделение кнопки при нажатии 
-    
+    // убираем выделение кнопки при нажатии
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -189,11 +161,9 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         // проверяем переход на равеносво с showDetail
         // с помощью переоределения init и его параметра identifier
         // который является опциональным стрингом
-        
         if segue.identifier == "showDetail" {
             
             // извлекаем индекс ячейки котрую нажали
-            
             guard let indexPath = tableView.indexPathForSelectedRow else { return }
             
             // повторяем тот же если иначе что бы
@@ -203,21 +173,15 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             // при фильтрации мы выбирали не коретную ячейку так как индексы ячеек
             // не совпадали для этого мы сделали выбор ячейки в зависимости
             // если текст в поисковике или нет
-            
             let place = isFiltering ? filteredPlaces[indexPath.row] : places[indexPath.row]
             
             // передаем данные с ячейки которую выбрали в NewPlaceViewController
             // с помощью атрибута destination у segue
-            
             let newPlaceVC = segue.destination as! NewPlaceViewController
             
             // обращаемся к экземпляру newPlaceVC и его свойству
             // currentPlace назначая в него выбраный place
-            
             newPlaceVC.currentPlace = place
-            
-        } else {
-            
         }
         
     }
@@ -229,16 +193,13 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         // что бы передать данные с контролера на который переходили ранее
         // на контролеер с которого мы перешли на контролер от куда и будем брать данные
         // для заполнение информации ячейки
-        
         guard let newPlaceVC = segue.source as? NewPlaceViewController else { return }
         
         // вызываем метод saveNewPlace
         // из экземпляра класа
-        
         newPlaceVC.savePlace()
         
         // обновляем данные таблицы для отображения нового места в ячейки
-        
         tableView.reloadData()
     }
     
@@ -247,7 +208,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func sortSelection(_ sender: UISegmentedControl) {
         
         // вызываем метод сортировки
-        
         sorting()
         
     }
@@ -256,23 +216,16 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         // меняем значение на противоположное
         // с помощью переключателя
-        
         ascendingSorting.toggle()
         
         if ascendingSorting {
-            
             // усли тру то выбираем стрелочками вверх
-            
             reversedSortingButton.image = UIImage(named: "ZA")
         } else {
-            
             // иначе стрелками вниз
-            
             reversedSortingButton.image = UIImage(named: "AZ")
         }
-        
         // вызываем метод сортировки
-        
         sorting()
         
     }
@@ -282,23 +235,14 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         // если выбран первый селектор по индексу 0
         // сортируем с ключем и по возрастанию или убыванию
         // подставляя булевое значение ascendingSorting
-        
         if segmentedControl.selectedSegmentIndex == 0 {
-            
             // сортируем данные по дате добавления
-            
             places = places.sorted(byKeyPath: "date", ascending: ascendingSorting)
-            
         } else {
-            
             // сортируем данные по имени
-            
             places = places.sorted(byKeyPath: "name", ascending: ascendingSorting)
-            
         }
-        
         // обновляем таблице что бы отобразились наши сортировки
-        
         tableView.reloadData()
     }
     
@@ -313,12 +257,10 @@ extension MainViewController: UISearchResultsUpdating {
         // можем извлеч опцианал так как метод updateSearchResults будет вызываться
         // только когда будем нажимать на поисковую строку
         // даже если строка будет пустой она не будут нил
-        
         filterContentForSearchText(searchController.searchBar.text!)
     }
     
     // метод фильтрации контента
-    
     private func filterContentForSearchText(_ searchText: String) {
         
         // заполняем массив отфильтроваными результатами
@@ -326,14 +268,11 @@ extension MainViewController: UISearchResultsUpdating {
         // поиск совершаем по CONTAINS
         // в независимости от регистра символов указав [c]
         // в %@ подставляются переменная searchText
-        
         filteredPlaces = places.filter("name CONTAINS[c] %@ OR location CONTAINS[c] %@",
                                        searchText, searchText)
         
         // обновляем таблицу
-        
         tableView.reloadData()
-        
     }
     
 }
